@@ -24,47 +24,49 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 import br.jus.jfes.sisgepi.inventario.modelo.Member;
-import br.jus.jfes.sisgepi.inventario.service.MemberRegistration;
+import br.jus.jfes.sisgepi.inventario.service.RegistraColeta;
 
 // The @Model stereotype is a convenience mechanism to make this a request-scoped bean that has an
 // EL name
 // Read more about the @Model stereotype in this FAQ:
 // http://sfwk.org/Documentation/WhatIsThePurposeOfTheModelAnnotation
 @Model
-public class MemberController {
+public class ColetaBean {
 
     @Inject
     private FacesContext facesContext;
-
+    
     @Inject
-    private MemberRegistration memberRegistration;
+    private RegistraColeta coleta;
+
 
     @Produces
     @Named
-    private Member newMember;
-
+    private Inventario itemInvent;
+    
     @PostConstruct
     public void initNewMember() {
-        newMember = new Member();
+        itemInvent = new Inventario();        
     }
 
-    public void register() throws Exception {
+    public void registrar() throws Exception {
         try {
-            memberRegistration.register(newMember);
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful");
+            coleta.register(itemInvent);
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Coletado!", "Registrado Sucesso");
             facesContext.addMessage(null, m);
             initNewMember();
         } catch (Exception e) {
             String errorMessage = getRootErrorMessage(e);
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration unsuccessful");
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Falha no Registro");
             facesContext.addMessage(null, m);
         }
     }
 
     private String getRootErrorMessage(Exception e) {
         // Default to general error message that registration failed.
-        String errorMessage = "Registration failed. See server log for more information";
+        String errorMessage = "Falha no Registro. Veja server Log par mais informacao";
         if (e == null) {
             // This shouldn't happen, but return the default messages
             return errorMessage;

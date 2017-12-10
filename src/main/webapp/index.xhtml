@@ -21,77 +21,71 @@
     xmlns:h="http://java.sun.com/jsf/html"
     template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
-        <h1>Welcome to JBoss!</h1>
+        <h1>Welcome to Inventário!</h1>
 
         <div>
-            <p>You have successfully deployed a Java EE 6 Enterprise
-                Application.</p>
-            <h3>Your application can run on:</h3>
-            <img src="resources/gfx/dualbrand_as7eap.png" />
+            <p>Inventário 2017.</p>
         </div>
 
-        <h:form id="reg">
-            <h2>Member Registration</h2>
-            <p>Enforces annotation-based constraints defined on the
-                model class.</p>
+        <h:form id="regInvent">
+            <h2>Registro Patrimonio</h2>
+            <p>Leitura de patrimonio nas diversas areas da JFES</p>
             <h:panelGrid columns="3" columnClasses="titleCell">
-                <h:outputLabel for="name" value="Name:" />
-                <h:inputText id="name" value="#{newMember.name}" />
-                <h:message for="name" errorClass="invalid" />
+                <h:outputLabel for="patrimonio" value="Patrimonio:" />
+                <h:inputText id="patrimonio" value="#{itemInvent.patrimonio}" />
+                <h:message for="patrimonio" errorClass="invalid" />
 
-                <h:outputLabel for="email" value="Email:" />
-                <h:inputText id="email" value="#{newMember.email}" />
-                <h:message for="email" errorClass="invalid" />
-
-                <h:outputLabel for="phoneNumber" value="Phone #:" />
-                <h:inputText id="phoneNumber"
-                    value="#{newMember.phoneNumber}" />
-                <h:message for="phoneNumber" errorClass="invalid" />
             </h:panelGrid>
 
             <p>
                 <h:panelGrid columns="2">
                     <h:commandButton id="register"
-                        action="#{memberController.register}"
-                        value="Register" styleClass="register" />
+                        action="#{coletaBean.register}"
+                        value="Registra" styleClass="register" />
                     <h:messages styleClass="messages"
                         errorClass="invalid" infoClass="valid"
                         warnClass="warning" globalOnly="true" />
                 </h:panelGrid>
             </p>
         </h:form>
-        <h2>Members</h2>
-        <h:panelGroup rendered="#{empty members}">
+        <h2>Equipamentos</h2>
+        <h:panelGroup rendered="#{empty equipamentos}">
             <em>No registered members.</em>
         </h:panelGroup>
-        <h:dataTable var="_member" value="#{members}"
+        <h:dataTable var="_equip" value="#{equipamentos}"
             rendered="#{not empty members}"
             styleClass="simpletablestyle">
             <h:column>
-                <f:facet name="header">Id</f:facet>
-                #{_member.id}
+                <f:facet name="header">Fabricante</f:facet>
+                #{_equip.setor}
             </h:column>
             <h:column>
-                <f:facet name="header">Name</f:facet>
-                #{_member.name}
+                <f:facet name="header">Patrimonio</f:facet>
+                #{_equip.patrimonio}
             </h:column>
             <h:column>
-                <f:facet name="header">Email</f:facet>
-                #{_member.email}
+                <f:facet name="header">Codigo</f:facet>
+                #{_equip.idEquip}
             </h:column>
             <h:column>
-                <f:facet name="header">Phone #</f:facet>
-                #{_member.phoneNumber}
+                <f:facet name="header">Modelo</f:facet>
+                #{_equip.modelo}
             </h:column>
             <h:column>
+                <f:facet name="header">Fabricante</f:facet>
+                #{_equip.fabricante}
+            </h:column>
+            <h:column rendered="false">
                 <f:facet name="header">REST URL</f:facet>
                 <a
                     href="#{request.contextPath}/rest/members/#{_member.id}">/rest/members/#{_member.id}</a>
             </h:column>
-            <f:facet name="footer">
-            REST URL for all members: <a
-                    href="#{request.contextPath}/rest/members">/rest/members</a>
-            </f:facet>
+            <ui:remove>
+	            <f:facet name="footer">
+	            REST URL for all members: <a
+	                    href="#{request.contextPath}/rest/members">/rest/members</a>
+	            </f:facet>
+            </ui:remove>
         </h:dataTable>
     </ui:define>
 </ui:composition>

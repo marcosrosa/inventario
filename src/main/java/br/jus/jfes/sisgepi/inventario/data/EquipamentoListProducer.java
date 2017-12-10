@@ -24,32 +24,33 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.jus.jfes.sisgepi.inventario.modelo.Member;
+import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
+import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 
 import java.util.List;
 
 @RequestScoped
-public class MemberListProducer {
+public class EquipamentoListProducer {
 
     @Inject
-    private MemberRepository memberRepository;
+    private SisgepiConsulta sisgepiBusca;
 
-    private List<Member> members;
+    private List<Equipamento> equipamentos;
 
     // @Named provides access the return value via the EL variable name "members" in the UI (e.g.
     // Facelets or JSP view)
     @Produces
     @Named
-    public List<Member> getMembers() {
-        return members;
+    public List<Equipamento> getEquipamentos() {
+        return equipamentos;
     }
 
-    public void onMemberListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Member member) {
-        retrieveAllMembersOrderedByName();
+    public void onMemberListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Inventario invent) {
+        buscaEquipamentosSetor();
     }
 
     @PostConstruct
-    public void retrieveAllMembersOrderedByName() {
-        members = memberRepository.findAllOrderedByName();
+    public void buscaEquipamentosSetor() {
+        equipamentos = sisgepiBusca.equipamentosPorLocalidade(135);
     }
 }

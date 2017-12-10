@@ -18,11 +18,20 @@ public class InventarioKey implements Serializable {
 	
 	public InventarioKey() {
 		super();
+		this.anoMesRef=201700;
 	}
 	
 	public InventarioKey(Integer anoMesRef, Long patrimonio) {
 		this.anoMesRef = anoMesRef;
 		this.patrimonio = patrimonio;
+	}
+	
+	public Long getPatrimonio() {
+		return patrimonio;
+	}
+	
+	public void setPatrimonio(Long patr) {
+		this.patrimonio = patr;
 	}
 
 	@Override

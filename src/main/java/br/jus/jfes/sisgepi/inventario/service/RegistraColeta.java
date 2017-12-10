@@ -21,13 +21,13 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import br.jus.jfes.sisgepi.inventario.modelo.Member;
+import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 
 import java.util.logging.Logger;
 
 // The @Stateless annotation eliminates the need for manual transaction demarcation
 @Stateless
-public class MemberRegistration {
+public class RegistraColeta {
 
     @Inject
     private Logger log;
@@ -36,11 +36,11 @@ public class MemberRegistration {
     private EntityManager em;
 
     @Inject
-    private Event<Member> memberEventSrc;
+    private Event<Inventario> inventarioEventSrc;
 
-    public void register(Member member) throws Exception {
-        log.info("Registering " + member.getName());
-        em.persist(member);
-        memberEventSrc.fire(member);
+    public void register(Inventario invent) throws Exception {
+        log.info("Coletado " + invent.getPatrimonio());
+        em.persist(invent);
+        inventarioEventSrc.fire(invent);
     }
 }

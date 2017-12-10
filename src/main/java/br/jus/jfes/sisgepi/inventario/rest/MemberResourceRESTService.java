@@ -42,7 +42,7 @@ import javax.ws.rs.core.Response;
 
 import br.jus.jfes.sisgepi.inventario.data.MemberRepository;
 import br.jus.jfes.sisgepi.inventario.modelo.Member;
-import br.jus.jfes.sisgepi.inventario.service.MemberRegistration;
+import br.jus.jfes.sisgepi.inventario.service.RegistraColeta;
 
 /**
  * JAX-RS Example
@@ -63,7 +63,7 @@ public class MemberResourceRESTService {
     private MemberRepository repository;
 
     @Inject
-    MemberRegistration registration;
+    private RegistraColeta registration;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -97,7 +97,7 @@ public class MemberResourceRESTService {
             // Validates member using bean validation
             validateMember(member);
 
-            registration.register(member);
+            //registration.register(inventario);
 
             // Create an "ok" response
             builder = Response.ok();
