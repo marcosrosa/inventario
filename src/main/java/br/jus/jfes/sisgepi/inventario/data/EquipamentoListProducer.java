@@ -48,9 +48,9 @@ public class EquipamentoListProducer {
     public void onMemberListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Inventario invent) {
         buscaEquipamentosSetor();
     }
-
+    
     @PostConstruct
     public void buscaEquipamentosSetor() {
-        equipamentos = sisgepiBusca.equipamentosPorLocalidade(135);
+        equipamentos = sisgepiBusca.equipamentosPorLocalidade();
     }
 }

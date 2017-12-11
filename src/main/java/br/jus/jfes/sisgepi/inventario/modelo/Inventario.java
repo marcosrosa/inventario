@@ -20,8 +20,8 @@ public class Inventario implements Serializable {
 	
 	/*
 	 *  0 normal
-	 *  1 Irrecuperavel
-	 *  2 AntiEconomico
+	 *  1 AntiEconomico
+	 *  2 Irrecuperavel
 	 *  3 Desfazimento
 	 */
 	
@@ -31,20 +31,21 @@ public class Inventario implements Serializable {
 	@Column
 	private Integer classificacao;
 	
-	@Column
+	@Column(name="setor_coleta")
 	private Integer setorColeta;
 	
 	@ManyToOne
-	@JoinColumn(name="patrimonio", referencedColumnName="Plaqueta")
+	@JoinColumn(name="patrimonio", referencedColumnName="Plaqueta", insertable=false, updatable=false)
 	private BemGepat bemGepat;
 
-	@Column
+	@Column(name="data_coleta")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataColeta;
 	
 	public Inventario() {
 		super();
 		this.inventarioKey= new InventarioKey();
+		//this.classificacao = 0;
 	}
 	
 	public Long getPatrimonio() {

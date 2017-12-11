@@ -21,6 +21,7 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import br.jus.jfes.sisgepi.inventario.modelo.BemGepat;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 
 import java.util.logging.Logger;
@@ -42,5 +43,9 @@ public class RegistraColeta {
         log.info("Coletado " + invent.getPatrimonio());
         em.persist(invent);
         inventarioEventSrc.fire(invent);
+    }
+    
+    public BemGepat buscaPorPatrimonio(Long patr) {
+    	return em.find(BemGepat.class, patr);
     }
 }

@@ -22,7 +22,7 @@ public class Equipamento implements Serializable {
 	private String idEquip;	
 	
 	@Column(name="sigla")
-	private String setorGrupo;
+	private String sigla;
 	
 	@Column(name="cod_setor")
 	private Long setorCod;
@@ -70,13 +70,13 @@ public class Equipamento implements Serializable {
 	}
 
 
-	public String getSetorGrupo() {
-		return setorGrupo;
+	public String getSigla() {
+		return sigla;
 	}
 
 
 	public void setSetorGrupo(String setorGrupo) {
-		this.setorGrupo = setorGrupo;
+		this.sigla = sigla;
 	}
 
 

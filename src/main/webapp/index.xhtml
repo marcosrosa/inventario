@@ -21,50 +21,89 @@
     xmlns:h="http://java.sun.com/jsf/html"
     template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
-        <h1>Welcome to Inventário!</h1>
+ 		<h:outputScript>
+ 			window.onload = function() {
+    			document.getElementById('regInvent:patrimonio').focus();
+			}
+ 		</h:outputScript>   	
+    
+        <h1>Inventário!</h1>
 
         <div>
             <p>Inventário 2017.</p>
         </div>
 
-        <h:form id="regInvent">
-            <h2>Registro Patrimonio</h2>
+		<h:form id="regLocalidade">
+		    <h2>Registro Patrimonio</h2>
             <p>Leitura de patrimonio nas diversas areas da JFES</p>
+            
+            <h:selectOneMenu id="somSetor" converter="#{setorConverter}" style="width:360px"
+					value="#{sisgepiBusca.setor}" valueChangeListener="#{sisgepiBusca.setorChangeList}" >
+					<f:selectItems value="#{sisgepiBusca.setores}" var="_setor" 
+						itemLabel="#{_setor.nome}"
+						itemValue="#{_setor}" />
+					<f:ajax listener="#{sisgepiBusca.setorChangeList}" render="tabEquip" />
+			</h:selectOneMenu>
+		
+		</h:form>
+
+        <h:form id="regInvent">            
+            <h:selectOneRadio id="sorClassif" value="#{itemInvent.classificacao}"  style="font-size:0.4em; display: inline-table; verticle-align: top; color: red;" layout="lineDirection" >
+					<f:selectItem itemLabel="Normal" itemValue="0" noSelectionOption="true"/>
+					<f:selectItem itemLabel="Anti-Econômico" itemValue="1" />
+					<f:selectItem itemLabel="Irrecuperável" itemValue="2" />
+					<f:selectItem itemLabel="Desfazimento" itemValue="3" />
+			</h:selectOneRadio>
+            
             <h:panelGrid columns="3" columnClasses="titleCell">
                 <h:outputLabel for="patrimonio" value="Patrimonio:" />
                 <h:inputText id="patrimonio" value="#{itemInvent.patrimonio}" />
                 <h:message for="patrimonio" errorClass="invalid" />
-
             </h:panelGrid>
 
             <p>
-                <h:panelGrid columns="2">
+                <h:panelGrid id="btnColeta" columns="2">
                     <h:commandButton id="register"
-                        action="#{coletaBean.register}"
+                        action="#{coletaBean.registrar}"
                         value="Registra" styleClass="register" />
                     <h:messages styleClass="messages"
                         errorClass="invalid" infoClass="valid"
                         warnClass="warning" globalOnly="true" />
                 </h:panelGrid>
             </p>
+            <p>
+                <h:panelGrid id="bemColetado" columns="2">
+                	<h:outputLabel value="Patrimonio:"/>
+                	<h:outputText value="#{coletaBean.coletado.plaqueta}" />
+                	<h:outputLabel value="Modelo:"/>
+                	<h:outputText value="#{coletaBean.coletado.itemDescr}" />
+                	<h:outputLabel value="Equipamento:"/>
+                	<h:outputText value="#{coletaBean.coletado.descricaoCompl}" />
+                	<h:outputLabel value="Marca:"/>
+                	<h:outputText value="#{coletaBean.coletado.marca}" />
+                	<h:outputLabel value="Nr.Serie:"/>
+                	<h:outputText value="#{coletaBean.coletado.nrSerie}" />
+                </h:panelGrid>
+            </p>
+
         </h:form>
         <h2>Equipamentos</h2>
         <h:panelGroup rendered="#{empty equipamentos}">
             <em>No registered members.</em>
         </h:panelGroup>
-        <h:dataTable var="_equip" value="#{equipamentos}"
-            rendered="#{not empty members}"
+        <h:dataTable id="tabEquip" var="_equip" value="#{equipamentos}"
+            rendered="#{not empty equipamentos}"
             styleClass="simpletablestyle">
             <h:column>
-                <f:facet name="header">Fabricante</f:facet>
-                #{_equip.setor}
+                <f:facet name="header">Localização</f:facet>
+                <h:outputText value="#{_equip.setor}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">Patrimonio</f:facet>
+                <f:facet name="header">Patrimônio</f:facet>
                 #{_equip.patrimonio}
             </h:column>
             <h:column>
-                <f:facet name="header">Codigo</f:facet>
+                <f:facet name="header">Código</f:facet>
                 #{_equip.idEquip}
             </h:column>
             <h:column>

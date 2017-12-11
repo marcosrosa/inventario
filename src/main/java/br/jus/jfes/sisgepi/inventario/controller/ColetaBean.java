@@ -24,8 +24,10 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.jus.jfes.sisgepi.inventario.modelo.BemGepat;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 import br.jus.jfes.sisgepi.inventario.modelo.Member;
+import br.jus.jfes.sisgepi.inventario.modelo.Setor;
 import br.jus.jfes.sisgepi.inventario.service.RegistraColeta;
 
 // The @Model stereotype is a convenience mechanism to make this a request-scoped bean that has an
@@ -40,27 +42,36 @@ public class ColetaBean {
     
     @Inject
     private RegistraColeta coleta;
-
-
+    
+    //private Integer classificacao;
+    
+    private BemGepat coletado;
+    
     @Produces
     @Named
     private Inventario itemInvent;
     
     @PostConstruct
-    public void initNewMember() {
-        itemInvent = new Inventario();        
+    public void initNovoInventario() {
+    	Integer classAnter = 0;
+    	if (itemInvent!=null)
+    		 classAnter = itemInvent.getClassificacao();
+        itemInvent = new Inventario();
+        itemInvent.setClassificacao(classAnter);
     }
 
     public void registrar() throws Exception {
         try {
             coleta.register(itemInvent);
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Coletado!", "Registrado Sucesso");
+            coletado = coleta.buscaPorPatrimonio(itemInvent.getPatrimonio());
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Coletado!", "Registrado Banco Dados");
             facesContext.addMessage(null, m);
-            initNewMember();
+            initNovoInventario();
         } catch (Exception e) {
             String errorMessage = getRootErrorMessage(e);
             FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Falha no Registro");
             facesContext.addMessage(null, m);
+            itemInvent.setPatrimonio(null);
         }
     }
 
@@ -82,5 +93,13 @@ public class ColetaBean {
         // This is the root cause message
         return errorMessage;
     }
+
+	public BemGepat getColetado() {
+		return coletado;
+	}
+
+	public void setColetado(BemGepat coletado) {
+		this.coletado = coletado;
+	}
 
 }
