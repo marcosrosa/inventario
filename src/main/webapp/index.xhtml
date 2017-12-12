@@ -21,21 +21,19 @@
     xmlns:h="http://java.sun.com/jsf/html"
     template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
+    	
  		<h:outputScript>
  			window.onload = function() {
     			document.getElementById('regInvent:patrimonio').focus();
 			}
  		</h:outputScript>   	
     
-        <h1>Inventário!</h1>
-
         <div>
-            <p>Inventário 2017.</p>
+            <p>Inventário 2017</p>
         </div>
 
 		<h:form id="regLocalidade">
-		    <h2>Registro Patrimonio</h2>
-            <p>Leitura de patrimonio nas diversas areas da JFES</p>
+		    <h2>Seleção Ambiente</h2>
             
             <h:selectOneMenu id="somSetor" converter="#{setorConverter}" style="width:360px"
 					value="#{sisgepiBusca.setor}" valueChangeListener="#{sisgepiBusca.setorChangeList}" >
@@ -88,15 +86,13 @@
 
         </h:form>
         <h2>Equipamentos</h2>
-        <h:panelGroup rendered="#{empty equipamentos}">
-            <em>No registered members.</em>
-        </h:panelGroup>
         <h:dataTable id="tabEquip" var="_equip" value="#{equipamentos}"
-            rendered="#{not empty equipamentos}"
+             rowClasses="#{rowClassesDef}"
             styleClass="simpletablestyle">
             <h:column>
                 <f:facet name="header">Localização</f:facet>
-                <h:outputText value="#{_equip.setor}"/>
+                <h:outputText value="#{_equip.setor}" rendered="#{empty equip_.inventario.patrimonio or _equip.setorCod eq _equip.inventario.setorColeta }"/>
+                <h:outputText value="#{_equip.inventario.setorClt.nome}" rendered="#{! empty equip_.inventario.patrimonio and _equip.setorCod != _equip.inventario.setorColeta }"/>
             </h:column>
             <h:column>
                 <f:facet name="header">Patrimônio</f:facet>

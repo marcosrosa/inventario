@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.jus.jfes.sisgepi.inventario.data.SisgepiConsulta;
 import br.jus.jfes.sisgepi.inventario.modelo.BemGepat;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 import br.jus.jfes.sisgepi.inventario.modelo.Member;
@@ -42,6 +43,9 @@ public class ColetaBean {
     
     @Inject
     private RegistraColeta coleta;
+    
+    @Inject
+    private SisgepiConsulta sisgepiBusca;
     
     //private Integer classificacao;
     
@@ -62,6 +66,9 @@ public class ColetaBean {
 
     public void registrar() throws Exception {
         try {
+        	coletado = coleta.buscaPorPatrimonio(itemInvent.getPatrimonio());
+        	if (coletado == null) throw new Exception("Patrimônio ["+itemInvent.getPatrimonio()+"] não Localizado!!");
+        	itemInvent.setSetorColeta(sisgepiBusca.getSetor().getCodSetor());
             coleta.register(itemInvent);
             coletado = coleta.buscaPorPatrimonio(itemInvent.getPatrimonio());
             FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Coletado!", "Registrado Banco Dados");

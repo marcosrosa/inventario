@@ -36,6 +36,8 @@ public class EquipamentoListProducer {
     private SisgepiConsulta sisgepiBusca;
 
     private List<Equipamento> equipamentos;
+    
+    private String rowClassesDef;
 
     // @Named provides access the return value via the EL variable name "members" in the UI (e.g.
     // Facelets or JSP view)
@@ -44,13 +46,41 @@ public class EquipamentoListProducer {
     public List<Equipamento> getEquipamentos() {
         return equipamentos;
     }
-
+    
+    @Produces
+    @Named
+    private String getRowClassesDef() {
+    	return rowClassesDef;
+    }
+    
     public void onMemberListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Inventario invent) {
         buscaEquipamentosSetor();
+    }
+    
+    private void ajustaRowClasses() { 
+    	  StringBuilder rowClasses = new StringBuilder();
+
+    	    for (Equipamento equip : equipamentos) {
+    	        if (rowClasses.length() > 0) rowClasses.append(",");
+    	        if(equip.getInventario()!=null) {
+    	        	 if(equip.getInventario().getSetorColeta()==null 
+    	        			 || equip.getSetorCod().equals(equip.getInventario().getSetorColeta()))	
+    	        		 rowClasses.append("encontrado");
+    	        	 else {
+    	        		 rowClasses.append("outro_setor");
+    	        		 // exibe os patrimonios do Ambiente tal que foi coletado em outro setor.
+    	        		 if (equip.getInventario().getSetorColeta()!=sisgepiBusca.getSetor().getCodSetor()) 
+    	        			 equip.setSetor("[Original:] "+equip.getSetor() + "\n\n[Coletado: ]"+equip.getInventario().getSetorClt().getNome());
+    	        	 }
+    	        } else 
+    	        	rowClasses.append("nao_encontrado");
+    	    }
+    	    rowClassesDef =  rowClasses.toString();
     }
     
     @PostConstruct
     public void buscaEquipamentosSetor() {
         equipamentos = sisgepiBusca.equipamentosPorLocalidade();
+        ajustaRowClasses();
     }
 }

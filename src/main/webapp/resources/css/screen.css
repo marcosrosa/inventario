@@ -168,15 +168,20 @@ input {
   text-align:left;
 }
 
-/* Using new CSS3 selectors for styling*/
-.simpletablestyle tr:nth-child(odd) {
-  background: #f4f3f3;
-}
-.simpletablestyle tr:nth-child(even) {
-  background: #ffffff;
-}
 
 .simpletablestyle td a:hover {
   color:#3883ce;
   text-decoration:none; 
+}
+
+.encontrado {
+    background:#0dd10d;
+}
+    
+.nao_encontrado {
+    background:#ff9c9c;
+}
+    
+.outro_setor {
+	background:#f0f95d;
 }

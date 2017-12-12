@@ -25,7 +25,7 @@ public class Equipamento implements Serializable {
 	private String sigla;
 	
 	@Column(name="cod_setor")
-	private Long setorCod;
+	private Integer setorCod;
 	
 	@Column
 	private String setor;
@@ -45,7 +45,16 @@ public class Equipamento implements Serializable {
 	@Column
 	private String obs;
 	
-
+	@Transient
+	private final Integer ano = 201700;
+	
+	@OneToOne(mappedBy="equipamento" ,optional=true)
+	private Inventario inventario;
+		
+	public Inventario getInventario() {
+		return inventario;
+	}
+	
 	public Equipamento() {
 		super();
 	}
@@ -75,17 +84,17 @@ public class Equipamento implements Serializable {
 	}
 
 
-	public void setSetorGrupo(String setorGrupo) {
+	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
 
 
-	public Long getSetorCod() {
+	public Integer getSetorCod() {
 		return setorCod;
 	}
 
 
-	public void setSetorCod(Long setorCod) {
+	public void setSetorCod(Integer setorCod) {
 		this.setorCod = setorCod;
 	}
 
@@ -173,5 +182,5 @@ public class Equipamento implements Serializable {
 			return false;
 		return true;
 	}
-   
+	   
 }

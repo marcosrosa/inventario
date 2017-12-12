@@ -11,9 +11,12 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
+import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 import br.jus.jfes.sisgepi.inventario.modelo.Setor;
 
 @Named("sisgepiBusca")
@@ -73,9 +76,9 @@ public class SisgepiConsulta implements Serializable {
 			setor.setSigla("");
 			setor.setCodSetor(1);
 		}
-		if (setor.getSigla()!= "") 
+		/*if (setor.getSigla()!= "") 
 			return equipamentosPorSiglaLocal(setor.getSigla());
-		else
+		else*/
 			return equipamentosPorCodSetor(setor.getCodSetor());
 	}
 	
@@ -85,12 +88,15 @@ public class SisgepiConsulta implements Serializable {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Equipamento> criteria = cb.createQuery(Equipamento.class);
         Root<Equipamento> equipamento = criteria.from(Equipamento.class);
+        Join invent = equipamento.join("inventario", JoinType.LEFT);
         // Swap criteria statements if you would like to try out type-safe criteria queries, a new
         // feature in JPA 2.0
         criteria.select(equipamento)
         	.where( cb.isNotNull(equipamento.get("patrimonio")) ,
         			cb.gt(equipamento.get("patrimonio"),0) ,
-        			cb.equal(equipamento.get("setorCod"), codLocal))
+        			cb.and( cb.or( cb.equal(equipamento.get("setorCod"), codLocal) , cb.equal(invent.get("setorColeta"),codLocal) )
+        					)
+        			) 
         	.orderBy(cb.asc(equipamento.get("patrimonio")));
         return em.createQuery(criteria).getResultList();
     }
@@ -100,12 +106,14 @@ public class SisgepiConsulta implements Serializable {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Equipamento> criteria = cb.createQuery(Equipamento.class);
         Root<Equipamento> equipamento = criteria.from(Equipamento.class);
+        Join invent = equipamento.join("inventario", JoinType.LEFT);
         // Swap criteria statements if you would like to try out type-safe criteria queries, a new
         // feature in JPA 2.0
         criteria.select(equipamento)
         	.where( cb.isNotNull(equipamento.get("patrimonio")), 
         			cb.gt(equipamento.get("patrimonio"),0) ,
-        			cb.equal(equipamento.get("sigla"), sigla))
+        			cb.equal(equipamento.get("sigla"), sigla)
+        		 )
         .orderBy( cb.asc(equipamento.get("setor")), cb.asc(equipamento.get("patrimonio")));
         return em.createQuery(criteria).getResultList();
     }

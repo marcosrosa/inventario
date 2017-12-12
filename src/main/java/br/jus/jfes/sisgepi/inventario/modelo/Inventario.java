@@ -19,6 +19,7 @@ public class Inventario implements Serializable {
 	
 	
 	/*
+	 *  classificacao 
 	 *  0 normal
 	 *  1 AntiEconomico
 	 *  2 Irrecuperavel
@@ -34,13 +35,17 @@ public class Inventario implements Serializable {
 	@Column(name="setor_coleta")
 	private Integer setorColeta;
 	
-	@ManyToOne
-	@JoinColumn(name="patrimonio", referencedColumnName="Plaqueta", insertable=false, updatable=false)
-	private BemGepat bemGepat;
-
 	@Column(name="data_coleta")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataColeta;
+	
+	@OneToOne(optional=true)
+	@JoinColumn(name="patrimonio", referencedColumnName="patrimonio", insertable=false,updatable=false)
+	private Equipamento equipamento;
+	
+	@ManyToOne
+	@JoinColumn(name="setor_coleta", insertable=false,updatable=false)
+	private Setor setorClt;
 	
 	public Inventario() {
 		super();
@@ -54,7 +59,8 @@ public class Inventario implements Serializable {
 	
 	public void setPatrimonio(Long pat) {
 		this.inventarioKey.setPatrimonio(pat);
-		this.dataColeta = Calendar.getInstance().getTime();
+		if (dataColeta==null)
+			this.dataColeta = Calendar.getInstance().getTime();
 	}
 
 	public InventarioKey getInventarioKey() {
@@ -81,20 +87,28 @@ public class Inventario implements Serializable {
 		this.setorColeta = setorColeta;
 	}
 
-	public BemGepat getBemGepat() {
-		return bemGepat;
-	}
-
-	public void setBemGepat(BemGepat bemGepat) {
-		this.bemGepat = bemGepat;
-	}
-
 	public Date getDataColeta() {
 		return dataColeta;
 	}
 
 	public void setDataColeta(Date dataColeta) {
 		this.dataColeta = dataColeta;
+	}
+
+	public Equipamento getEquipamento() {
+		return equipamento;
+	}
+
+	public void setEquipamento(Equipamento equipamento) {
+		this.equipamento = equipamento;
+	}
+
+	public Setor getSetorClt() {
+		return setorClt;
+	}
+
+	public void setSetorClt(Setor setorClt) {
+		this.setorClt = setorClt;
 	}
 	
 	
