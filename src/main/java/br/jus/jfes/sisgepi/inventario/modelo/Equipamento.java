@@ -48,13 +48,10 @@ public class Equipamento implements Serializable {
 	@Transient
 	private final Integer ano = 201700;
 	
-	@OneToOne(mappedBy="equipamento" ,optional=true)
+	@OneToOne(mappedBy="equipamento",optional=true)
 	private Inventario inventario;
-		
-	public Inventario getInventario() {
-		return inventario;
-	}
-	
+				
+
 	public Equipamento() {
 		super();
 	}
@@ -157,6 +154,15 @@ public class Equipamento implements Serializable {
 	public void setObs(String obs) {
 		this.obs = obs;
 	}
+	
+	public Inventario getInventario() {
+		return inventario;
+	}
+
+	public void setInventario(Inventario inventario) {
+		this.inventario = inventario;
+	}
+
 
 	@Override
 	public int hashCode() {

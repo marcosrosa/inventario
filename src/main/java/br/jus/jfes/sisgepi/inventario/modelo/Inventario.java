@@ -41,12 +41,12 @@ public class Inventario implements Serializable {
 	
 	@OneToOne(optional=true)
 	@JoinColumn(name="patrimonio", referencedColumnName="patrimonio", insertable=false,updatable=false)
-	private Equipamento equipamento;
+	private Equipamento equipamento; 
 	
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name="setor_coleta", insertable=false,updatable=false)
 	private Setor setorClt;
-	
+		
 	public Inventario() {
 		super();
 		this.inventarioKey= new InventarioKey();
@@ -93,14 +93,6 @@ public class Inventario implements Serializable {
 
 	public void setDataColeta(Date dataColeta) {
 		this.dataColeta = dataColeta;
-	}
-
-	public Equipamento getEquipamento() {
-		return equipamento;
-	}
-
-	public void setEquipamento(Equipamento equipamento) {
-		this.equipamento = equipamento;
 	}
 
 	public Setor getSetorClt() {

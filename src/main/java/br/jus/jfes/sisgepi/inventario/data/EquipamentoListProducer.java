@@ -24,10 +24,12 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
+//import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
+import br.jus.jfes.sisgepi.inventario.modelo.InventarioDTO;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RequestScoped
 public class EquipamentoListProducer {
@@ -35,15 +37,18 @@ public class EquipamentoListProducer {
     @Inject
     private SisgepiConsulta sisgepiBusca;
 
-    private List<Equipamento> equipamentos;
+    private List<InventarioDTO> equipamentos;
     
     private String rowClassesDef;
 
+    @Inject 
+    private Logger logger;
+    
     // @Named provides access the return value via the EL variable name "members" in the UI (e.g.
     // Facelets or JSP view)
     @Produces
     @Named
-    public List<Equipamento> getEquipamentos() {
+    public List<InventarioDTO> getEquipamentos() {
         return equipamentos;
     }
     
@@ -60,21 +65,27 @@ public class EquipamentoListProducer {
     private void ajustaRowClasses() { 
     	  StringBuilder rowClasses = new StringBuilder();
 
-    	    for (Equipamento equip : equipamentos) {
-    	        if (rowClasses.length() > 0) rowClasses.append(",");
-    	        if(equip.getInventario()!=null) {
-    	        	 if(equip.getInventario().getSetorColeta()==null 
-    	        			 || equip.getSetorCod().equals(equip.getInventario().getSetorColeta()))	
+    	    for (InventarioDTO equip : equipamentos) {
+    	        if (rowClasses.length() > 0) 
+    	        	rowClasses.append(",");
+    	        if(equip.isColetado()) {
+    	        	 if(equip.getSetorColetaCod().equals(equip.getSetorEquipCod()))	{
     	        		 rowClasses.append("encontrado");
-    	        	 else {
+    	        	 	 equip.setSetorDisplay(equip.getSetorEquip());
+    	        	 } else {
     	        		 rowClasses.append("outro_setor");
-    	        		 // exibe os patrimonios do Ambiente tal que foi coletado em outro setor.
-    	        		 if (equip.getInventario().getSetorColeta()!=sisgepiBusca.getSetor().getCodSetor()) 
-    	        			 // nao pode 
-    	        			 equip.setSetor("[Original:] "+equip.getSetor() + "\n\n[Coletado: ]"+equip.getInventario().getSetorClt().getNome());
+    	        		 logger.info("sisgepiBusca --> codSetor --> "+sisgepiBusca.getSetor().getCodSetor());
+    	        		 logger.info("setorColetaCod --> "+ equip.getSetorColetaCod());
+    	        		 logger.info("setorEquipCod --> " + equip.getSetorEquipCod());
+    	        		 if (sisgepiBusca.getSetor().getCodSetor().equals(equip.getSetorEquipCod()))
+    	        			 equip.setSetorDisplay("Setor Coletado: "+equip.getSetorColeta());
+    	        		 else
+    	        			 equip.setSetorDisplay("Setor Original: "+equip.getSetorEquip());
     	        	 }
-    	        } else 
+    	        } else {
     	        	rowClasses.append("nao_encontrado");
+    	        	equip.setSetorDisplay(equip.getSetorEquip());
+    	        }
     	    }
     	    rowClassesDef =  rowClasses.toString();
     }

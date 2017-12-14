@@ -95,12 +95,11 @@
             styleClass="simpletablestyle">
             <h:column>
                 <f:facet name="header">Localização</f:facet>
-                <h:outputText value="#{_equip.setor}" rendered="#{empty equip_.inventario.patrimonio or _equip.setorCod eq _equip.inventario.setorColeta }"/>
-                <h:outputText value="#{_equip.inventario.setorClt.nome}" rendered="#{! empty equip_.inventario.patrimonio and _equip.setorCod != _equip.inventario.setorColeta }"/>
+                <h:outputText value="#{_equip.setorDisplay}" />                
             </h:column>
             <h:column>
                 <f:facet name="header">Patrimônio</f:facet>
-                #{_equip.patrimonio}
+                #{_equip.patrimonioEq}
             </h:column>
             <h:column>
                 <f:facet name="header">Código</f:facet>
