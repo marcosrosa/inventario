@@ -70,6 +70,7 @@ public class EquipamentoListProducer {
     	        		 rowClasses.append("outro_setor");
     	        		 // exibe os patrimonios do Ambiente tal que foi coletado em outro setor.
     	        		 if (equip.getInventario().getSetorColeta()!=sisgepiBusca.getSetor().getCodSetor()) 
+    	        			 // nao pode 
     	        			 equip.setSetor("[Original:] "+equip.getSetor() + "\n\n[Coletado: ]"+equip.getInventario().getSetorClt().getNome());
     	        	 }
     	        } else 

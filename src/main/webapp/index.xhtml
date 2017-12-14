@@ -33,59 +33,63 @@
         </div>
 
 		<h:form id="regLocalidade">
+		    
 		    <h2>Seleção Ambiente</h2>
             
-            <h:selectOneMenu id="somSetor" converter="#{setorConverter}" style="width:360px"
+            <h:selectOneMenu id="somSetor" converter="#{setorConverter}" style="width:400px;font-size:0.5em;"
 					value="#{sisgepiBusca.setor}" valueChangeListener="#{sisgepiBusca.setorChangeList}" >
 					<f:selectItems value="#{sisgepiBusca.setores}" var="_setor" 
 						itemLabel="#{_setor.nome}"
 						itemValue="#{_setor}" />
-					<f:ajax listener="#{sisgepiBusca.setorChangeList}" render="tabEquip" />
+					<f:ajax listener="#{sisgepiBusca.setorChangeList}" render="setorDescr tabEquip" />
 			</h:selectOneMenu>
+			
+	        <h:panelGrid id="setorDescr" columns="2" cellpadding="8px" style="font-size:1em;">
+	        	<h:outputText value="#{sisgepiBusca.setor.codSetor}" />
+	        	<h:outputText value="#{sisgepiBusca.setor.sigla}" />
+	        </h:panelGrid>
 		
 		</h:form>
 
         <h:form id="regInvent">            
-            <h:selectOneRadio id="sorClassif" value="#{itemInvent.classificacao}"  style="font-size:0.4em; display: inline-table; verticle-align: top; color: red;" layout="lineDirection" >
+            <h:selectOneRadio id="sorClassif" value="#{itemInvent.classificacao}"  style="font-size:0.5em; display: inline-table; verticle-align: top; color: blue;" layout="lineDirection" >
 					<f:selectItem itemLabel="Normal" itemValue="0" noSelectionOption="true"/>
 					<f:selectItem itemLabel="Anti-Econômico" itemValue="1" />
 					<f:selectItem itemLabel="Irrecuperável" itemValue="2" />
 					<f:selectItem itemLabel="Desfazimento" itemValue="3" />
 			</h:selectOneRadio>
             
-            <h:panelGrid columns="3" columnClasses="titleCell">
+            <h:panelGrid columns="4" columnClasses="titleCell">
                 <h:outputLabel for="patrimonio" value="Patrimonio:" />
                 <h:inputText id="patrimonio" value="#{itemInvent.patrimonio}" />
                 <h:message for="patrimonio" errorClass="invalid" />
+                <h:commandButton id="register"  action="#{coletaBean.registrar}"
+                        value="Registra" styleClass="register" />                
             </h:panelGrid>
 
-            <p>
-                <h:panelGrid id="btnColeta" columns="2">
-                    <h:commandButton id="register"
-                        action="#{coletaBean.registrar}"
-                        value="Registra" styleClass="register" />
-                    <h:messages styleClass="messages"
-                        errorClass="invalid" infoClass="valid"
-                        warnClass="warning" globalOnly="true" />
-                </h:panelGrid>
-            </p>
-            <p>
-                <h:panelGrid id="bemColetado" columns="2">
-                	<h:outputLabel value="Patrimonio:"/>
-                	<h:outputText value="#{coletaBean.coletado.plaqueta}" />
-                	<h:outputLabel value="Modelo:"/>
-                	<h:outputText value="#{coletaBean.coletado.itemDescr}" />
-                	<h:outputLabel value="Equipamento:"/>
-                	<h:outputText value="#{coletaBean.coletado.descricaoCompl}" />
-                	<h:outputLabel value="Marca:"/>
-                	<h:outputText value="#{coletaBean.coletado.marca}" />
-                	<h:outputLabel value="Nr.Serie:"/>
-                	<h:outputText value="#{coletaBean.coletado.nrSerie}" />
-                </h:panelGrid>
-            </p>
+            <h:panelGrid id="btnColeta" columns="1">
+                <h:messages styleClass="messages"
+                    errorClass="invalid" infoClass="valid"
+                    warnClass="warning" globalOnly="true" />
+            </h:panelGrid>
+
+            <h:panelGrid id="bemColetado" columns="2" styleClass="returnPesq">
+            	<h:outputLabel value="Patrimonio:"/>
+            	<h:outputText value="#{coletaBean.coletado.plaqueta}" />
+            	<h:outputLabel value="Modelo:"/>
+            	<h:outputText value="#{coletaBean.coletado.itemDescr}" />
+            	<h:outputLabel value="Equipamento:"/>
+            	<h:outputText value="#{coletaBean.coletado.descricaoCompl}" />
+            	<h:outputLabel value="Marca:"/>
+            	<h:outputText value="#{coletaBean.coletado.marca}" />
+            	<h:outputLabel value="Nr.Serie:"/>
+            	<h:outputText value="#{coletaBean.coletado.nrSerie}" />
+            </h:panelGrid>
 
         </h:form>
-        <h2>Equipamentos</h2>
+        
+        <h2>Equipamentos:</h2>
+                        
         <h:dataTable id="tabEquip" var="_equip" value="#{equipamentos}"
              rowClasses="#{rowClassesDef}"
             styleClass="simpletablestyle">

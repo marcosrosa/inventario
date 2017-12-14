@@ -71,11 +71,6 @@ public class SisgepiConsulta implements Serializable {
 	
 		
 	public List<Equipamento> equipamentosPorLocalidade() {
-		if (setor == null ) {
-			setor = new Setor();
-			setor.setSigla("");
-			setor.setCodSetor(1);
-		}
 		/*if (setor.getSigla()!= "") 
 			return equipamentosPorSiglaLocal(setor.getSigla());
 		else*/
@@ -139,6 +134,7 @@ public class SisgepiConsulta implements Serializable {
     @PostConstruct
     public void buscaTodosSetores() {
         setores = todosSetoresAsc();
+        setor = setores.get(0);
     }
 
     public void setorChangeList() {

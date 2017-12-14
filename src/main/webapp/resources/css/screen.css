@@ -35,12 +35,12 @@ body {
   background: #FFFFFF;
   background-image: url(#{request.contextPath}/resources/gfx/headerbkg.png);
   background-repeat: repeat-x;
-  padding-top: 30px;
+  padding-top: 15px;
   box-shadow: 3px 3px 15px #d5d5d5;
 }
 #content {
   float: left;
-  width: 520px;
+  width: 540px;
   margin: 10px;
 }
 #footer {
@@ -83,25 +83,26 @@ span.invalid {
 }
 form {
   padding: 0.5em;
-  font: 80%/1 sans-serif;
   border: 1px solid #D5D5D5;
 }
-label {
+
+.returnPesq label {
   float: left;
-  width: 15%;
-  margin-left: 20px;
+  width: 95%;
   margin-right: 0.5em;
   padding-top: 0.2em;
   text-align: right;
   font-weight: bold;
   color:#363636;
 }
-input {
+
+#content input[type=text] {
   margin-bottom: 8px;
+  font-size: 0.75em;
 }
+
 .register {
-  float: left;
-  margin-left: 85px;
+  margin-left: 5px;
 }
 
 /*  -----  table style  -------  */
@@ -112,7 +113,7 @@ input {
 .simpletablestyle {
   background-color:#E6E7E8;
   clear:both;
-  width: 550px;
+  width: 540px;
 }
 
 .simpletablestyle img {
@@ -122,13 +123,13 @@ input {
 .simpletablestyle td {
   height:2em;
   padding-left: 6px;
-  font-size:11px;
+  font-size:14px;
   padding:5px 5px;
 }
 
 .simpletablestyle th {
 	background: url(#{request.contextPath}/resources/gfx/bkg-blkheader.png) black repeat-x top left;
-  font-size:12px;
+  font-size:13px;
   font-weight:normal;
   padding:0 10px 0 5px;
   border-bottom:#999999 dotted 1px;
@@ -137,7 +138,7 @@ input {
 .simpletablestyle thead {
   background: url(#{request.contextPath}/resources/gfx/bkg-blkheader.png) black repeat-x top left;
   height:31px;
-  font-size:10px;
+  font-size:12px;
   font-weight:bold;
   color:#FFFFFF;
   text-align:left;

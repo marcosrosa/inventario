@@ -95,6 +95,20 @@ public class Setor implements Serializable {
 			return false;
 		return true;
 	}
+	
+/*	public String getNomeDisplay() {
+		StringBuilder sb = new StringBuilder();
+		if (sigla != null && sigla.length()>0) {
+			sb.append(sigla);
+			sb.append(" - ");
+			sb.append(nome);
+			sb.append(" (");
+			sb.append(codSetor);
+			sb.append(")");
+			return sb.toString();
+		} 
+		return nome + "("+codSetor+")";
+	} */
    
 	@Override
 	public String toString() {
