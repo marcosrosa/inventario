@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.jus.jfes.sisgepi.inventario.modelo.BemGepat;
+import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 
 import java.util.logging.Logger;
@@ -39,13 +40,19 @@ public class RegistraColeta {
     @Inject
     private Event<Inventario> inventarioEventSrc;
 
-    public void register(Inventario invent) throws Exception {
-        log.info("Coletado " + invent.getPatrimonio());
+    public void register(Inventario invent, Long patrimonio) throws Exception {
+        log.info("register (Inventario, Long patrim) -> patrimonio " + patrimonio);
+        Equipamento equip = buscaEquipamentoPorPatrimonio(patrimonio);
+        invent.setEquipamento(equip);
         em.persist(invent);
         inventarioEventSrc.fire(invent);
     }
     
-    public BemGepat buscaPorPatrimonio(Long patr) {
+    public BemGepat buscaGepatPorPatrimonio(Long patr) {
     	return em.find(BemGepat.class, patr);
+    }
+    
+    private Equipamento buscaEquipamentoPorPatrimonio(Long patr) {
+    	return em.find(Equipamento.class, patr);
     }
 }

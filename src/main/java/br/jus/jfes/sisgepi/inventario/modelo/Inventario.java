@@ -50,7 +50,7 @@ public class Inventario implements Serializable {
 		
 	public Inventario() {
 		super();
-		this.inventarioKey= new InventarioKey();
+		this.inventarioKey = new InventarioKey();
 		//this.classificacao = 0;
 	}
 	
@@ -103,7 +103,13 @@ public class Inventario implements Serializable {
 	public void setSetorClt(Setor setorClt) {
 		this.setorClt = setorClt;
 	}
-	
-	
-   
+
+	public Equipamento getEquipamento() {
+		return equipamento;
+	}
+
+	public void setEquipamento(Equipamento equipamento) {
+		this.equipamento = equipamento;
+	}
+	  
 }

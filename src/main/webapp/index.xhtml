@@ -59,9 +59,9 @@
 					<f:selectItem itemLabel="Desfazimento" itemValue="3" />
 			</h:selectOneRadio>
             
-            <h:panelGrid columns="4" columnClasses="titleCell">
+            <h:panelGrid columns="4" >
                 <h:outputLabel for="patrimonio" value="Patrimonio:" />
-                <h:inputText id="patrimonio" value="#{itemInvent.patrimonio}" />
+                <h:inputText id="patrimonio" value="#{coletaBean.patInformado}" style="width:9em;"/>
                 <h:message for="patrimonio" errorClass="invalid" />
                 <h:commandButton id="register"  action="#{coletaBean.registrar}"
                         value="Registra" styleClass="register" />                
