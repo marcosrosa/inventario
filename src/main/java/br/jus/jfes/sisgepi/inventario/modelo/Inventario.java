@@ -39,8 +39,9 @@ public class Inventario implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataColeta;
 	
-	@OneToOne(optional=true)
-	@JoinColumn(name="patrimonio", referencedColumnName="patrimonio", insertable=false,updatable=false)
+	@MapsId("patrimonio")
+	@ManyToOne(optional=true)
+	@JoinColumn(name="patrimonio", referencedColumnName="patrimonio")
 	private Equipamento equipamento; 
 	
 	@ManyToOne()
