@@ -1,6 +1,8 @@
 package br.jus.jfes.sisgepi.inventario.modelo;
 
 import java.io.Serializable;
+import java.util.Calendar;
+
 import javax.persistence.*;
 
 
@@ -11,17 +13,21 @@ public class InventarioKey implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Column(name="referencia")
-	private Integer anoMesRef;
+	private Integer referencia;
 	
 	private Long patrimonio;
 	
 	public InventarioKey() {
 		super();
-		this.anoMesRef=201700;
+		//ano referencia sera o ano corrente
+		this.referencia=Calendar.YEAR*100;
+		// continua a mesma referencia ate abril
+		if(Calendar.getInstance().get(Calendar.MONTH) < Calendar.MAY)
+			this.referencia=(Calendar.getInstance().get(Calendar.YEAR)-1)*100;
 	}
 	
 	public InventarioKey(Integer anoMesRef, Long patrimonio) {
-		this.anoMesRef = anoMesRef;
+		this.referencia = anoMesRef;
 		this.patrimonio = patrimonio;
 	}
 	
@@ -37,7 +43,7 @@ public class InventarioKey implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((anoMesRef == null) ? 0 : anoMesRef.hashCode());
+		result = prime * result + ((referencia == null) ? 0 : referencia.hashCode());
 		result = prime * result + ((patrimonio == null) ? 0 : patrimonio.hashCode());
 		return result;
 	}
@@ -51,10 +57,10 @@ public class InventarioKey implements Serializable {
 		if (!(obj instanceof InventarioKey))
 			return false;
 		InventarioKey other = (InventarioKey) obj;
-		if (anoMesRef == null) {
-			if (other.anoMesRef != null)
+		if (referencia == null) {
+			if (other.referencia != null)
 				return false;
-		} else if (!anoMesRef.equals(other.anoMesRef))
+		} else if (!referencia.equals(other.referencia))
 			return false;
 		if (patrimonio == null) {
 			if (other.patrimonio != null)
