@@ -1,6 +1,8 @@
 package br.jus.jfes.sisgepi.inventario.modelo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 /**
@@ -44,12 +46,9 @@ public class Equipamento implements Serializable {
 	
 	@Column
 	private String obs;
-	
-	@Transient
-	private final Integer ano = 201700;
-	
-	@OneToOne(mappedBy="equipamento",optional=true)
-	private Inventario inventario;
+		
+	@OneToMany(mappedBy="equipamento")
+	private List<Inventario> inventarios;
 				
 
 	public Equipamento() {
@@ -155,12 +154,12 @@ public class Equipamento implements Serializable {
 		this.obs = obs;
 	}
 	
-	public Inventario getInventario() {
-		return inventario;
+	public List<Inventario> getInventario() {
+		return inventarios;
 	}
 
-	public void setInventario(Inventario inventario) {
-		this.inventario = inventario;
+	public void setInventario(List<Inventario> inventario) {
+		this.inventarios = inventario;
 	}
 
 

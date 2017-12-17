@@ -83,7 +83,7 @@ public class SisgepiConsulta implements Serializable {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<InventarioDTO> criteria = cb.createQuery(InventarioDTO.class);
         Root<Equipamento> equip = criteria.from(Equipamento.class);
-        Join<Equipamento, Inventario> invent = equip.join("inventario", JoinType.LEFT);
+        Join<Equipamento, Inventario> invent = equip.join("inventarios", JoinType.LEFT);
         Join<Inventario, Setor> iSetor = invent.join("setorClt", JoinType.LEFT);
         // Swap criteria statements if you would like to try out type-safe criteria queries, a new
         // feature in JPA 2.0        

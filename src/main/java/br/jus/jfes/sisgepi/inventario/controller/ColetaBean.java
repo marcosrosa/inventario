@@ -42,7 +42,7 @@ public class ColetaBean {
     private FacesContext facesContext;
     
     @Inject
-    private RegistraColeta coleta;
+    private RegistraColeta coletaManager;
     
     @Inject
     private SisgepiConsulta sisgepiBusca;
@@ -51,6 +51,8 @@ public class ColetaBean {
     
     private BemGepat coletado;
     
+    private Long patInformado;
+    
     @Produces
     @Named
     private Inventario itemInvent;
@@ -58,6 +60,7 @@ public class ColetaBean {
     @PostConstruct
     public void initNovoInventario() {
     	Integer classAnter = 0;
+    	patInformado = null;
     	if (itemInvent!=null)
     		 classAnter = itemInvent.getClassificacao();
         itemInvent = new Inventario();
@@ -66,19 +69,20 @@ public class ColetaBean {
 
     public void registrar() throws Exception {
         try {
-        	coletado = coleta.buscaPorPatrimonio(itemInvent.getPatrimonio());
-        	if (coletado == null) throw new Exception("Patrimônio ["+itemInvent.getPatrimonio()+"] não Localizado!!");
+        	coletado = coletaManager.buscaGepatPorPatrimonio(patInformado);
+        	if (coletado == null) 
+        		throw new Exception("Patrimônio ["+patInformado+"] não Localizado Gemat !!!");
         	itemInvent.setSetorColeta(sisgepiBusca.getSetor().getCodSetor());
-            coleta.register(itemInvent);
-            coletado = coleta.buscaPorPatrimonio(itemInvent.getPatrimonio());
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, "Coletado!", "Registrado Banco Dados");
+            coletaManager.register(itemInvent, patInformado);
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            		"Coletado [ "+patInformado+" ]", "Registrado Banco Dados");
             facesContext.addMessage(null, m);
-            initNovoInventario();
-        } catch (Exception e) {
+        } catch (Exception e) {        	
             String errorMessage = getRootErrorMessage(e);
             FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Falha no Registro");
             facesContext.addMessage(null, m);
-            itemInvent.setPatrimonio(null);
+        } finally {
+        	initNovoInventario();
         }
     }
 
@@ -108,5 +112,15 @@ public class ColetaBean {
 	public void setColetado(BemGepat coletado) {
 		this.coletado = coletado;
 	}
+
+	public Long getPatInformado() {
+		return patInformado;
+	}
+
+	public void setPatInformado(Long patInformado) {
+		this.patInformado = patInformado;
+	}
+	
+	
 
 }

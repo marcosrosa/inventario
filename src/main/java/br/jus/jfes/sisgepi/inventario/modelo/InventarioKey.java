@@ -13,7 +13,6 @@ public class InventarioKey implements Serializable {
 	@Column(name="referencia")
 	private Integer anoMesRef;
 	
-	@Column(name="patrimonio")
 	private Long patrimonio;
 	
 	public InventarioKey() {
@@ -64,11 +63,6 @@ public class InventarioKey implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
+
    
 }
