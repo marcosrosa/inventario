@@ -1,6 +1,5 @@
 package br.jus.jfes.sisgepi.inventario.data;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
