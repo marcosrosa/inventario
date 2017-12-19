@@ -1,6 +1,7 @@
 package br.jus.jfes.sisgepi.inventario.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class InventarioDTO implements Serializable {
 
@@ -18,7 +19,8 @@ public class InventarioDTO implements Serializable {
 	public InventarioDTO(Long patrimonioEq, Long patrimonioIn, Integer ano, 
 			Integer classificacao, Integer setorColetaCod, Integer setorEquipCod, 
 			String setorColeta, String setorEquip, 
-			String idEquip, String modelo, String fabricante, String nrSerie, String obs) {
+			String idEquip, String modelo, String fabricante, String nrSerie, String obs,
+			Date dtBaixa, String tipoEquip) {
 		
 		super();
 		this.patrimonioEq = patrimonioEq;
@@ -37,6 +39,10 @@ public class InventarioDTO implements Serializable {
 		this.fabricante = fabricante;
 		this.nrSerie = nrSerie;
 		this.obs=obs;
+		
+		this.dtBaixa = dtBaixa;
+		this.tipoEquip = tipoEquip;
+		
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -58,9 +64,10 @@ public class InventarioDTO implements Serializable {
 	private String fabricante;	
 	private String nrSerie;
 	private String obs;
-	
 	private String setorDisplay;
 	
+	private Date dtBaixa;
+	private String tipoEquip;
 
 	public Integer getAno() {
 		return ano;
@@ -209,6 +216,26 @@ public class InventarioDTO implements Serializable {
 		} else if (!patrimonioEq.equals(other.patrimonioEq))
 			return false;
 		return true;
+	}
+
+
+	public Date getDtBaixa() {
+		return dtBaixa;
+	}
+
+
+	public void setDtBaixa(Date dtBaixa) {
+		this.dtBaixa = dtBaixa;
+	}
+
+
+	public String getTipoEquip() {
+		return tipoEquip;
+	}
+
+
+	public void setTipoEquip(String tipoEquip) {
+		this.tipoEquip = tipoEquip;
 	}
 
 	

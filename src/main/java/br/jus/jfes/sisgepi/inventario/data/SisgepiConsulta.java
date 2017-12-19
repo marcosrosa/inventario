@@ -70,15 +70,17 @@ public class SisgepiConsulta implements Serializable {
 		return em.find(Setor.class, codigo);
 	}
 		
-	public List<InventarioDTO> equipamentosPorLocalidade() {
+	public List<InventarioDTO> equipamentosPorLocalidade(Integer refInv) {
 		/*if (setor.getSigla()!= "") 
 			return equipamentosPorSiglaLocal(setor.getSigla());
 		else*/
-			return equipamentosPorCodSetor(setor.getCodSetor());
+			log.info("equipamentosPorLocal ->> "+refInv);
+			return equipamentosPorCodSetor(setor.getCodSetor(), refInv);
 	}
 	
-	private List<InventarioDTO> equipamentosPorCodSetor(Integer codLocal) {
-		log.info("equipPorCodSetor --> "+codLocal);
+	private List<InventarioDTO> equipamentosPorCodSetor(Integer codLocal, Integer refInvent) {
+		log.info("equipPorCodSetor local--> "+codLocal);
+		log.info("equipPorCodSetor refer--> "+refInvent);
 		
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<InventarioDTO> criteria = cb.createQuery(InventarioDTO.class);
@@ -87,13 +89,14 @@ public class SisgepiConsulta implements Serializable {
         Join<Inventario, Setor> iSetor = invent.join("setorClt", JoinType.LEFT);
         // Swap criteria statements if you would like to try out type-safe criteria queries, a new
         // feature in JPA 2.0        
-        criteria.select(cb.construct(InventarioDTO.class, equip.get("patrimonio"), invent.get("inventarioKey").get("patrimonio"), invent.get("inventarioKey").get("anoMesRef"), 
-        		invent.get("classificacao"), invent.get("setorColeta"), equip.get("setorCod"), 
-        		iSetor.get("nome"), equip.get("setor"), 
-        		equip.get("idEquip"), equip.get("modelo"), equip.get("fabricante"), equip.get("nrSerie"), equip.get("obs")  ) )
+        criteria.select(cb.construct(InventarioDTO.class, equip.get("patrimonio"), invent.get("inventarioKey").get("patrimonio"), 
+        		invent.get("inventarioKey").get("referencia"), invent.get("classificacao"), invent.get("setorColeta"), 
+        		equip.get("setorCod"), iSetor.get("nome"), equip.get("setor"), equip.get("idEquip"), equip.get("modelo"), 
+        		equip.get("fabricante"), equip.get("nrSerie"), equip.get("obs") , equip.get("dtBaixa"), equip.get("tipoEquip")) )
         	.where( cb.isNotNull(equip.get("patrimonio")) ,
         			cb.gt(equip.get("patrimonio"),0) ,
-        			cb.and( cb.or(cb.equal(invent.get("inventarioKey").get("anoMesRef"), 201700) , cb.isNull(invent.get("inventarioKey").get("anoMesRef")))  ),
+        			cb.notEqual(equip.get("tipoEquip"), "swi"),
+        			cb.and( cb.or(cb.equal(invent.get("inventarioKey").get("referencia"), refInvent) , cb.isNull(invent.get("inventarioKey").get("referencia")))  ),
         			cb.and( cb.or( cb.equal(equip.get("setorCod"), codLocal) , cb.equal(invent.get("setorColeta"),codLocal)
         					     ) 
         				  )

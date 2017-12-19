@@ -20,7 +20,7 @@ public class InventarioKey implements Serializable {
 	public InventarioKey() {
 		super();
 		//ano referencia sera o ano corrente
-		this.referencia=Calendar.YEAR*100;
+		this.referencia= Calendar.getInstance().get(Calendar.YEAR) * 100;
 		// continua a mesma referencia ate abril
 		if(Calendar.getInstance().get(Calendar.MONTH) < Calendar.MAY)
 			this.referencia=(Calendar.getInstance().get(Calendar.YEAR)-1)*100;
@@ -31,6 +31,14 @@ public class InventarioKey implements Serializable {
 		this.patrimonio = patrimonio;
 	}
 	
+	public Integer getReferencia() {
+		return referencia;
+	}
+
+	public void setReferencia(Integer referencia) {
+		this.referencia = referencia;
+	}
+
 	public Long getPatrimonio() {
 		return patrimonio;
 	}
@@ -69,6 +77,5 @@ public class InventarioKey implements Serializable {
 			return false;
 		return true;
 	}
-
    
 }

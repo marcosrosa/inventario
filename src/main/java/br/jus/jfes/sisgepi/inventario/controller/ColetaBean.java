@@ -16,6 +16,8 @@
  */
 package br.jus.jfes.sisgepi.inventario.controller;
 
+import java.util.Calendar;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
@@ -27,8 +29,6 @@ import javax.inject.Named;
 import br.jus.jfes.sisgepi.inventario.data.SisgepiConsulta;
 import br.jus.jfes.sisgepi.inventario.modelo.BemGepat;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
-import br.jus.jfes.sisgepi.inventario.modelo.Member;
-import br.jus.jfes.sisgepi.inventario.modelo.Setor;
 import br.jus.jfes.sisgepi.inventario.service.RegistraColeta;
 
 // The @Model stereotype is a convenience mechanism to make this a request-scoped bean that has an
@@ -72,7 +72,11 @@ public class ColetaBean {
         	coletado = coletaManager.buscaGepatPorPatrimonio(patInformado);
         	if (coletado == null) 
         		throw new Exception("Patrimônio ["+patInformado+"] não Localizado Gemat !!!");
+        	// setor onde foi encontrado o bem
         	itemInvent.setSetorColeta(sisgepiBusca.getSetor().getCodSetor());
+        	// dataHora do registro
+        	itemInvent.setDataColeta(Calendar.getInstance().getTime());
+        	// salva no banco
             coletaManager.register(itemInvent, patInformado);
             FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, 
             		"Coletado [ "+patInformado+" ]", "Registrado Banco Dados");

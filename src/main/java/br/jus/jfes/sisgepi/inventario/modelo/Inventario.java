@@ -60,8 +60,6 @@ public class Inventario implements Serializable {
 	
 	public void setPatrimonio(Long pat) {
 		this.inventarioKey.setPatrimonio(pat);
-		if (dataColeta==null)
-			this.dataColeta = Calendar.getInstance().getTime();
 	}
 
 	public InventarioKey getInventarioKey() {

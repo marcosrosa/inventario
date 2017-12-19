@@ -27,6 +27,7 @@ import javax.inject.Named;
 //import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 import br.jus.jfes.sisgepi.inventario.modelo.InventarioDTO;
+import br.jus.jfes.sisgepi.inventario.modelo.InventarioKey;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -92,7 +93,8 @@ public class EquipamentoListProducer {
     
     @PostConstruct
     public void buscaEquipamentosSetor() {
-        equipamentos = sisgepiBusca.equipamentosPorLocalidade();
+    	InventarioKey iRef = new InventarioKey();
+        equipamentos = sisgepiBusca.equipamentosPorLocalidade(iRef.getReferencia());
         ajustaRowClasses();
     }
 }

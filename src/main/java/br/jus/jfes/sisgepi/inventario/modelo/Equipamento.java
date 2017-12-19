@@ -1,6 +1,7 @@
 package br.jus.jfes.sisgepi.inventario.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -46,6 +47,12 @@ public class Equipamento implements Serializable {
 	
 	@Column
 	private String obs;
+	
+	@Column(name="tipo_equip")
+	private String tipoEquip;
+	
+	@Column(name="dt_baixa")
+	private Date dtBaixa;
 		
 	@OneToMany(mappedBy="equipamento")
 	private List<Inventario> inventarios;
@@ -186,6 +193,22 @@ public class Equipamento implements Serializable {
 		} else if (!patrimonio.equals(other.patrimonio))
 			return false;
 		return true;
+	}
+
+	public String getTipoEquip() {
+		return tipoEquip;
+	}
+
+	public void setTipoEquip(String tipoEquip) {
+		this.tipoEquip = tipoEquip;
+	}
+
+	public Date getDtBaixa() {
+		return dtBaixa;
+	}
+
+	public void setDtBaixa(Date dtBaixa) {
+		this.dtBaixa = dtBaixa;
 	}
 	   
 }
