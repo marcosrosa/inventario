@@ -74,7 +74,7 @@
             </h:panelGrid>
 
             <h:panelGrid id="bemColetado" columns="2" styleClass="returnPesq">
-            	<h:outputLabel value="Patrimonio:"/>
+            	<h:outputLabel value="Patrimonio:" style="background-color: #{coletaBean.isSetorCorreto() ? 'green' : 'yellow'}" />
             	<h:outputText value="#{coletaBean.coletado.plaqueta}" />
             	<h:outputLabel value="Modelo:"/>
             	<h:outputText value="#{coletaBean.coletado.itemDescr}" />

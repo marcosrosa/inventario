@@ -109,5 +109,9 @@ public class Inventario implements Serializable {
 	public void setEquipamento(Equipamento equipamento) {
 		this.equipamento = equipamento;
 	}
+	
+	public boolean isSetorCorreto() {
+		return setorColeta.equals(equipamento.getSetorCod());
+	}
 	  
 }

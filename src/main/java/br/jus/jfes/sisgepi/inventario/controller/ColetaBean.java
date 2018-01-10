@@ -17,6 +17,7 @@
 package br.jus.jfes.sisgepi.inventario.controller;
 
 import java.util.Calendar;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -47,11 +48,16 @@ public class ColetaBean {
     @Inject
     private SisgepiConsulta sisgepiBusca;
     
+    @Inject
+    private Logger log;
+
     //private Integer classificacao;
-    
+     
     private BemGepat coletado;
     
     private Long patInformado;
+    
+    private boolean setorCorreto = false;
     
     @Produces
     @Named
@@ -78,9 +84,11 @@ public class ColetaBean {
         	itemInvent.setDataColeta(Calendar.getInstance().getTime());
         	// salva no banco
             coletaManager.register(itemInvent, patInformado);
+            setorCorreto = itemInvent.isSetorCorreto();
             FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, 
             		"Coletado [ "+patInformado+" ]", "Registrado Banco Dados");
             facesContext.addMessage(null, m);
+            
         } catch (Exception e) {        	
             String errorMessage = getRootErrorMessage(e);
             FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Falha no Registro");
@@ -125,6 +133,9 @@ public class ColetaBean {
 		this.patInformado = patInformado;
 	}
 	
-	
+	public boolean isSetorCorreto() {
+		log.info("isSetorCorreto()");
+		return setorCorreto;		
+	}
 
 }
