@@ -41,7 +41,7 @@
 					<f:selectItems value="#{sisgepiBusca.setores}" var="_setor" 
 						itemLabel="#{_setor.nome}"
 						itemValue="#{_setor}" />
-					<f:ajax listener="#{sisgepiBusca.setorChangeList}" render="setorDescr tabEquip" />
+					<f:ajax listener="#{sisgepiBusca.setorChangeList}" render="setorDescr tabEquip regInvent:outColetado regInvent:outNaoEnc" />
 			</h:selectOneMenu>
 			
 	        <h:panelGrid id="setorDescr" columns="2" cellpadding="8px" style="font-size:1em;">
@@ -76,14 +76,16 @@
             <h:panelGrid id="bemColetado" columns="2" styleClass="returnPesq">
             	<h:outputLabel value="Patrimonio:" style="background-color: #{coletaBean.isSetorCorreto() ? 'green' : 'yellow'}" />
             	<h:outputText value="#{coletaBean.coletado.plaqueta}" />
+            	<h:outputLabel value="Coletados:"  />
+            	<h:outputText id="outColetado" value="#{qtdColetado}" />
+            	<h:outputLabel value="Faltam:"  />
+            	<h:outputText id="outNaoEnc" value="#{qtdNaoEncontrado}" />
             	<h:outputLabel value="Modelo:"/>
             	<h:outputText value="#{coletaBean.coletado.itemDescr}" />
             	<h:outputLabel value="Equipamento:"/>
             	<h:outputText value="#{coletaBean.coletado.descricaoCompl}" />
             	<h:outputLabel value="Marca:"/>
             	<h:outputText value="#{coletaBean.coletado.marca}" />
-            	<h:outputLabel value="Nr.Serie:"/>
-            	<h:outputText value="#{coletaBean.coletado.nrSerie}" />
             </h:panelGrid>
 
         </h:form>

@@ -45,6 +45,8 @@ public class EquipamentoListProducer {
     @Inject 
     private Logger logger;
     
+    private Integer qtdColetado;
+    private Integer qtdNaoEncontrado;
     // @Named provides access the return value via the EL variable name "members" in the UI (e.g.
     // Facelets or JSP view)
     @Produces
@@ -63,14 +65,18 @@ public class EquipamentoListProducer {
         buscaEquipamentosSetor();
     }
     
+    
+    
     private void ajustaRowClasses() { 
     	  StringBuilder rowClasses = new StringBuilder();
-
+    	    qtdColetado=0;
+    	    qtdNaoEncontrado=0;
     	    for (InventarioDTO equip : equipamentos) {
     	        if (rowClasses.length() > 0) 
     	        	rowClasses.append(",");
     	        if(equip.isColetado()) {
     	        	 if(equip.getSetorColetaCod().equals(equip.getSetorEquipCod()))	{
+    	        		 ++qtdColetado;
     	        		 rowClasses.append("encontrado");
     	        	 	 equip.setSetorDisplay(equip.getSetorEquip());
     	        	 } else {
@@ -80,10 +86,13 @@ public class EquipamentoListProducer {
     	        		 logger.info("setorEquipCod --> " + equip.getSetorEquipCod());
     	        		 if (sisgepiBusca.getSetor().getCodSetor().equals(equip.getSetorEquipCod()))
     	        			 equip.setSetorDisplay("Setor Coletado: "+equip.getSetorColeta());
-    	        		 else
+    	        		 else {
     	        			 equip.setSetorDisplay("Setor Original: "+equip.getSetorEquip());
+    	        			 ++qtdColetado;
+    	        		 }
     	        	 }
     	        } else {
+    	        	++qtdNaoEncontrado;
     	        	rowClasses.append("nao_encontrado");
     	        	equip.setSetorDisplay(equip.getSetorEquip());
     	        }
@@ -97,4 +106,17 @@ public class EquipamentoListProducer {
         equipamentos = sisgepiBusca.equipamentosPorLocalidade(iRef.getReferencia());
         ajustaRowClasses();
     }
+    
+    @Produces 
+    @Named
+    private Integer getQtdNaoEncontrado() {
+    	return qtdNaoEncontrado;
+    }
+    
+    @Produces
+    @Named
+    private Integer getQtdColetado() {
+    	return qtdColetado;
+    }
+    
 }
