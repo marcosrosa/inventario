@@ -59,6 +59,10 @@ public class ColetaBean {
     
     private boolean setorCorreto = false;
     
+    private boolean baixadoGepat = false;
+    
+    private boolean verListaBens = true;
+    
     @Produces
     @Named
     private Inventario itemInvent;
@@ -76,15 +80,29 @@ public class ColetaBean {
     public void registrar() throws Exception {
         try {
         	coletado = coletaManager.buscaGepatPorPatrimonio(patInformado);
-        	if (coletado == null) 
-        		throw new Exception("Patrimônio ["+patInformado+"] não Localizado Gemat !!!");
+        	if (coletado == null) { 
+        		FacesMessage k = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            		"Patrimônio ["+patInformado+"] não Localizado Gemat !!!", "Inconsistência Gepat");
+        			facesContext.addMessage(null, k);
+        	}
         	// setor onde foi encontrado o bem
         	itemInvent.setSetorColeta(sisgepiBusca.getSetor().getCodSetor());
         	// dataHora do registro
         	itemInvent.setDataColeta(Calendar.getInstance().getTime());
+
+        	// verifica baixa no gepat
+        	Integer classific = 0;
+        	if (coletado!=null && coletado.getSituacao()==2) {
+        		baixadoGepat = true;
+        		classific = itemInvent.getClassificacao();
+        		itemInvent.setClassificacao(5);
+        	}
         	// salva no banco
             coletaManager.register(itemInvent, patInformado);
             setorCorreto = itemInvent.isSetorCorreto();
+            if (itemInvent.getClassificacao()==5) 
+            	itemInvent.setClassificacao(classific);
+            	
             FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_INFO, 
             		"Coletado [ "+patInformado+" ]", "Registrado Banco Dados");
             facesContext.addMessage(null, m);
@@ -137,5 +155,19 @@ public class ColetaBean {
 		log.info("isSetorCorreto()");
 		return setorCorreto;		
 	}
+	
+	public boolean isBaixadoGepat() {
+		return baixadoGepat;
+	}
+
+	public boolean isVerListaBens() {
+		return verListaBens;
+	}
+
+	public void setVerListaBens(boolean verListaBens) {
+		this.verListaBens = verListaBens;
+	}
+	
+	
 
 }

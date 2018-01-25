@@ -210,5 +210,9 @@ public class Equipamento implements Serializable {
 	public void setDtBaixa(Date dtBaixa) {
 		this.dtBaixa = dtBaixa;
 	}
+	
+	public boolean isBaixado() {
+		return dtBaixa!= null;
+	}
 	   
 }

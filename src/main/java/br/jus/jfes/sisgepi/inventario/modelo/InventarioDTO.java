@@ -238,6 +238,9 @@ public class InventarioDTO implements Serializable {
 		this.tipoEquip = tipoEquip;
 	}
 
+	public boolean isBaixado() {
+		return dtBaixa != null;
+	}
 	
 	
 	

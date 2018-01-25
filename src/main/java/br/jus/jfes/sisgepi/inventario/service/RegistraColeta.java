@@ -25,6 +25,7 @@ import br.jus.jfes.sisgepi.inventario.modelo.BemGepat;
 import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 
+import java.util.Date;
 import java.util.logging.Logger;
 
 // The @Stateless annotation eliminates the need for manual transaction demarcation

@@ -71,6 +71,7 @@ public class EquipamentoListProducer {
     	  StringBuilder rowClasses = new StringBuilder();
     	    qtdColetado=0;
     	    qtdNaoEncontrado=0;
+    	    //StringBuilder baixadoStr = "(B) ";
     	    for (InventarioDTO equip : equipamentos) {
     	        if (rowClasses.length() > 0) 
     	        	rowClasses.append(",");

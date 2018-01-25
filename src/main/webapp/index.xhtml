@@ -54,9 +54,10 @@
         <h:form id="regInvent">            
             <h:selectOneRadio id="sorClassif" value="#{itemInvent.classificacao}"  style="font-size:0.5em; display: inline-table; verticle-align: top; color: blue;" layout="lineDirection" >
 					<f:selectItem itemLabel="Normal" itemValue="0" noSelectionOption="true"/>
-					<f:selectItem itemLabel="Anti-Econômico" itemValue="1" />
-					<f:selectItem itemLabel="Irrecuperável" itemValue="2" />
-					<f:selectItem itemLabel="Desfazimento" itemValue="3" />
+					<f:selectItem itemLabel="Ocioso" itemValue="1" />
+					<f:selectItem itemLabel="Recuperável" itemValue="2" />
+					<f:selectItem itemLabel="AntiEconômico" itemValue="3" />
+					<f:selectItem itemLabel="Irrecuperável" itemValue="4" />
 			</h:selectOneRadio>
             
             <h:panelGrid columns="4" >
@@ -75,7 +76,7 @@
 
             <h:panelGrid id="bemColetado" columns="2" styleClass="returnPesq">
             	<h:outputLabel value="Patrimonio:" style="background-color: #{coletaBean.isSetorCorreto() ? 'green' : 'yellow'}" />
-            	<h:outputText value="#{coletaBean.coletado.plaqueta}" />
+            	<h:outputText value="#{coletaBean.coletado.plaqueta}" style="background-color: #{coletaBean.isBaixadoGepat() ? 'red' : ''}" />
             	<h:outputLabel value="Coletados:"  />
             	<h:outputText id="outColetado" value="#{qtdColetado}" />
             	<h:outputLabel value="Faltam:"  />
@@ -87,13 +88,15 @@
             	<h:outputLabel value="Marca:"/>
             	<h:outputText value="#{coletaBean.coletado.marca}" />
             </h:panelGrid>
-
+			<h:selectBooleanCheckbox label="Listar Bens"  
+			 	value="#{coletaBean.verListaBens}" onchange="submit();" />
+			<h:outputLabel value="Listar Itens"/>
         </h:form>
         
         <h2>Equipamentos:</h2>
                         
         <h:dataTable id="tabEquip" var="_equip" value="#{equipamentos}"
-             rowClasses="#{rowClassesDef}"
+             rowClasses="#{rowClassesDef}" rendered="#{coletaBean.verListaBens}"
             styleClass="simpletablestyle">
             <h:column>
                 <f:facet name="header">Localização</f:facet>
@@ -105,7 +108,7 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Código</f:facet>
-                #{_equip.idEquip}
+                #{_equip.idEquip} #{_equip.isBaixado() ? '(B)' : ''}      
             </h:column>
             <h:column>
                 <f:facet name="header">Modelo</f:facet>

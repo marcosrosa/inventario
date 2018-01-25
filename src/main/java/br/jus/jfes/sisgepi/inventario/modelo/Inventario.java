@@ -20,10 +20,12 @@ public class Inventario implements Serializable {
 	
 	/*
 	 *  classificacao 
-	 *  0 normal
-	 *  1 AntiEconomico
-	 *  2 Irrecuperavel
-	 *  3 Desfazimento
+	 *  0 Normal(Ativo; produtivo)
+	 *  1 Ocioso
+	 *  2 Recuperável
+	 *  3 AntiEconomico
+	 *  4 Irrecuperável
+	 *  5 Baixado no Gepat (so por Sistema)
 	 */
 	
 	@EmbeddedId
