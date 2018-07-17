@@ -44,7 +44,7 @@ public class Inventario implements Serializable {
 	@MapsId("patrimonio")
 	@ManyToOne(optional=true)
 	@JoinColumn(name="patrimonio", referencedColumnName="patrimonio")
-	private Equipamento equipamento; 
+	private Equipamento equipamento;
 	
 	@ManyToOne()
 	@JoinColumn(name="setor_coleta", insertable=false,updatable=false)

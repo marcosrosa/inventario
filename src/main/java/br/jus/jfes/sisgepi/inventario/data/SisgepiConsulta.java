@@ -1,6 +1,7 @@
 package br.jus.jfes.sisgepi.inventario.data;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -35,6 +36,8 @@ public class SisgepiConsulta implements Serializable {
 	private Setor setor;
 	
 	private List<Setor> setores;
+	
+	private Integer anoInventario;
 	
     @Inject
     private Logger log;
@@ -86,6 +89,7 @@ public class SisgepiConsulta implements Serializable {
         CriteriaQuery<InventarioDTO> criteria = cb.createQuery(InventarioDTO.class);
         Root<Equipamento> equip = criteria.from(Equipamento.class);
         Join<Equipamento, Inventario> invent = equip.join("inventarios", JoinType.LEFT);
+        invent.on(cb.equal(invent.get("inventarioKey").get("referencia"),refInvent));
         Join<Inventario, Setor> iSetor = invent.join("setorClt", JoinType.LEFT);
         // Swap criteria statements if you would like to try out type-safe criteria queries, a new
         // feature in JPA 2.0        
@@ -96,7 +100,6 @@ public class SisgepiConsulta implements Serializable {
         	.where( cb.isNotNull(equip.get("patrimonio")) ,
         			cb.gt(equip.get("patrimonio"),0) ,
         			cb.notEqual(equip.get("tipoEquip"), "swi"),
-        			cb.and( cb.or(cb.equal(invent.get("inventarioKey").get("referencia"), refInvent) , cb.isNull(invent.get("inventarioKey").get("referencia")))  ),
         			cb.and( cb.or( cb.equal(equip.get("setorCod"), codLocal) , cb.equal(invent.get("setorColeta"),codLocal)
         					     ) 
         				  )
@@ -144,11 +147,23 @@ public class SisgepiConsulta implements Serializable {
     public void buscaTodosSetores() {
         setores = todosSetoresAsc();
         setor = setores.get(0);
+        setAnoInventario(Calendar.getInstance().get(Calendar.YEAR));
+        // continua a mesma referencia ate abril
+        if(Calendar.getInstance().get(Calendar.MONTH) < Calendar.MAY)
+        	setAnoInventario(Calendar.getInstance().get(Calendar.YEAR)-1);
     }
 
     public void setorChangeList() {
     	log.info("setor select " + setor.getCodSetor());
     }
+
+	public Integer getAnoInventario() {
+		return anoInventario;
+	}
+
+	public void setAnoInventario(Integer anoInventario) {
+		this.anoInventario = anoInventario;
+	}
 
 	
 }

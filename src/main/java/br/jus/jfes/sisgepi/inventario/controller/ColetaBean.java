@@ -167,7 +167,6 @@ public class ColetaBean {
 	public void setVerListaBens(boolean verListaBens) {
 		this.verListaBens = verListaBens;
 	}
-	
-	
+		
 
 }
