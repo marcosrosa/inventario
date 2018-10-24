@@ -107,24 +107,7 @@ public class SisgepiConsulta implements Serializable {
         	.orderBy(cb.asc(equip.get("patrimonio")));
         return em.createQuery(criteria).getResultList();
     }
-	
-	private List<Equipamento> equipamentosPorSiglaLocal(String sigla) {
-		log.info("equipPorSigla --> "+sigla);
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Equipamento> criteria = cb.createQuery(Equipamento.class);
-        Root<Equipamento> equipamento = criteria.from(Equipamento.class);
-        Join invent = equipamento.join("inventario", JoinType.LEFT);
-        // Swap criteria statements if you would like to try out type-safe criteria queries, a new
-        // feature in JPA 2.0
-        criteria.select(equipamento)
-        	.where( cb.isNotNull(equipamento.get("patrimonio")), 
-        			cb.gt(equipamento.get("patrimonio"),0) ,
-        			cb.equal(equipamento.get("sigla"), sigla)
-        		 )
-        .orderBy( cb.asc(equipamento.get("setor")), cb.asc(equipamento.get("patrimonio")));
-        return em.createQuery(criteria).getResultList();
-    }
-	
+		
 	private List<Setor> todosSetoresAsc() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Setor> criteria = cb.createQuery(Setor.class);
