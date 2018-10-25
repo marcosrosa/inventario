@@ -39,6 +39,8 @@ public class SisgepiConsulta implements Serializable {
 	
 	private Integer anoInventario;
 	
+	private String filtroSetor;
+	
     @Inject
     private Logger log;
 
@@ -112,10 +114,18 @@ public class SisgepiConsulta implements Serializable {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Setor> criteria = cb.createQuery(Setor.class);
         Root<Setor> setorq = criteria.from(Setor.class);
-        // Swap criteria statements if you would like to try out type-safe criteria queries, a new
-        // feature in JPA 2.0
         criteria.select(setorq).orderBy( cb.asc(setorq.get("nome")));
         return em.createQuery(criteria).getResultList();		
+	}
+	
+	private List<Setor> setorPorAndar(Integer andarParam) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Setor> criteria = cb.createQuery(Setor.class);
+        Root<Setor> setorq = criteria.from(Setor.class);
+        
+        criteria.select(setorq).where(cb.equal(setorq.get("andar"), andarParam)).orderBy( cb.asc(setorq.get("nome")));
+        return em.createQuery(criteria).getResultList();		
+		
 	}
 
 	public Setor getSetor() {
@@ -124,6 +134,20 @@ public class SisgepiConsulta implements Serializable {
 
 	public void setSetor(Setor setor) {
 		this.setor = setor;
+	}
+	
+	public void filtrarSetor() {
+		Integer andarFiltro;
+		if (!filtroSetor.isEmpty()) {
+			try {
+				andarFiltro = Integer.parseInt(filtroSetor);
+			} catch (NumberFormatException nfe) {
+				andarFiltro = 0;
+			}
+			setores = setorPorAndar(andarFiltro);
+		} else {
+			setores = todosSetoresAsc();
+		}
 	}
 
     @PostConstruct
@@ -146,6 +170,14 @@ public class SisgepiConsulta implements Serializable {
 
 	public void setAnoInventario(Integer anoInventario) {
 		this.anoInventario = anoInventario;
+	}
+
+	public String getFiltroSetor() {
+		return filtroSetor;
+	}
+
+	public void setFiltroSetor(String filtroSetor) {
+		this.filtroSetor = filtroSetor;
 	}
 
 	

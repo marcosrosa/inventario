@@ -35,7 +35,8 @@
 		<h:form id="regLocalidade">
 		    
 		    <h2>Seleção Ambiente</h2>
-            
+            <h:inputText value="#{sisgepiBusca.filtroSetor}" />
+            <h:commandButton action="#{sisgepiBusca.filtrarSetor}" value="Filtro" />
             <h:selectOneMenu id="somSetor" converter="#{setorConverter}" style="width:400px;font-size:0.5em;"
 					value="#{sisgepiBusca.setor}" valueChangeListener="#{sisgepiBusca.setorChangeList}" >
 					<f:selectItems value="#{sisgepiBusca.setores}" var="_setor" 

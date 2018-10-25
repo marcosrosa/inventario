@@ -23,8 +23,8 @@ public class Setor implements Serializable {
 	@Column(name="setor")
 	private String nome;
 	
-	@Column
-	private String andar;
+	@Column(name="andar_cod")
+	private Integer andar;
 	
 	@Column
 	private String ramal;
@@ -58,11 +58,11 @@ public class Setor implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}   
-	public String getAndar() {
+	public Integer getAndar() {
 		return this.andar;
 	}
 
-	public void setAndar(String andar) {
+	public void setAndar(Integer andar) {
 		this.andar = andar;
 	}   
 	public String getRamal() {
