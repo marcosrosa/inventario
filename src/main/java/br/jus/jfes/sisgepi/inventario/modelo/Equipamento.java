@@ -54,7 +54,7 @@ public class Equipamento implements Serializable {
 	@Column(name="dt_baixa")
 	private Date dtBaixa;
 		
-	@OneToMany(mappedBy="equipamento")
+	@OneToMany(mappedBy="bemInformatica")
 	private List<Inventario> inventarios;
 				
 

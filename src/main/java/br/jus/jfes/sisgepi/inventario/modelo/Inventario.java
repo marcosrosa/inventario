@@ -43,8 +43,8 @@ public class Inventario implements Serializable {
 	
 	@MapsId("patrimonio")
 	@ManyToOne(optional=true)
-	@JoinColumn(name="patrimonio", referencedColumnName="patrimonio")
-	private Equipamento equipamento;
+	@JoinColumn(name="patrimonio", referencedColumnName="plaqueta")
+	private BemGepat bemInformatica;
 	
 	@ManyToOne()
 	@JoinColumn(name="setor_coleta", insertable=false,updatable=false)
@@ -104,16 +104,16 @@ public class Inventario implements Serializable {
 		this.setorClt = setorClt;
 	}
 
-	public Equipamento getEquipamento() {
-		return equipamento;
+	public BemGepat getBemInformatica() {
+		return bemInformatica;
 	}
 
-	public void setEquipamento(Equipamento equipamento) {
-		this.equipamento = equipamento;
+	public void setEquipamento(BemGepat bemInformatica) {
+		this.bemInformatica = bemInformatica;
 	}
 	
 	public boolean isSetorCorreto() {
-		return setorColeta.equals(equipamento.getSetorCod());
+		return setorColeta.equals(bemInformatica.getAmbitenteCod());
 	}
 	  
 }
