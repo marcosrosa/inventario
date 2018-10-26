@@ -43,8 +43,8 @@ public class RegistraColeta {
 
     public void register(Inventario invent, Long patrimonio) throws Exception {
         log.info("register (Inventario, Long patrim) -> patrimonio " + patrimonio);
-        Equipamento equip = buscaEquipamentoPorPatrimonio(patrimonio);
-        invent.setEquipamento(equip);
+        BemGepat equip = buscaEquipamentoPorPatrimonio(patrimonio);
+        invent.setBemInformatica(equip);
         em.persist(invent);
         inventarioEventSrc.fire(invent);
     }
@@ -53,7 +53,7 @@ public class RegistraColeta {
     	return em.find(BemGepat.class, patr);
     }
     
-    private Equipamento buscaEquipamentoPorPatrimonio(Long patr) {
-    	return em.find(Equipamento.class, patr);
+    private BemGepat buscaEquipamentoPorPatrimonio(Long patr) {
+    	return em.find(BemGepat.class, patr);
     }
 }

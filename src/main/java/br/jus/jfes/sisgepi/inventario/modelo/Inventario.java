@@ -108,7 +108,7 @@ public class Inventario implements Serializable {
 		return bemInformatica;
 	}
 
-	public void setEquipamento(BemGepat bemInformatica) {
+	public void setBemInformatica(BemGepat bemInformatica) {
 		this.bemInformatica = bemInformatica;
 	}
 	
