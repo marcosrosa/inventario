@@ -18,16 +18,16 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html">
-
-        
+    xmlns:h="http://java.sun.com/jsf/html"
+    template="/WEB-INF/templates/impressao.xhtml">
+    <ui:define name="relat">
         <h2>Relação de Equipamentos:</h2>
                         
         <h:dataTable id="tabEquip" var="_equip" value="#{equipamentosPorAmbiente}"
             styleClass="simpletablestyle">
             <h:column>
                 <f:facet name="header">Localização</f:facet>
-                <h:outputText value="#{_equip.setorDisplay}" />                
+                <h:outputText value="#{_equip.setorColeta}" />                
             </h:column>
             <h:column>
                 <f:facet name="header">Patrimônio</f:facet>
@@ -38,23 +38,13 @@
                 #{_equip.idEquip} #{_equip.isBaixado() ? '(B)' : ''}      
             </h:column>
             <h:column>
-                <f:facet name="header">Modelo</f:facet>
-                #{_equip.modelo}
-            </h:column>
-            <h:column>
                 <f:facet name="header">Fabricante</f:facet>
                 #{_equip.fabricante}
             </h:column>
-            <h:column rendered="false">
-                <f:facet name="header">REST URL</f:facet>
-                <a
-                    href="#{request.contextPath}/rest/members/#{_member.id}">/rest/members/#{_member.id}</a>
+            <h:column>
+                <f:facet name="header">Modelo</f:facet>
+                #{_equip.modelo}
             </h:column>
-            <ui:remove>
-	            <f:facet name="footer">
-	            REST URL for all members: <a
-	                    href="#{request.contextPath}/rest/members">/rest/members</a>
-	            </f:facet>
-            </ui:remove>
         </h:dataTable>
+     </ui:define>
 </ui:composition>

@@ -1,6 +1,7 @@
 package br.jus.jfes.sisgepi.inventario.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
@@ -94,19 +96,39 @@ public class SisgepiConsulta implements Serializable {
         invent.on(cb.equal(invent.get("inventarioKey").get("referencia"),refInvent));
         Join<Inventario, Setor> iSetor = invent.join("setorClt", JoinType.LEFT);
         // Swap criteria statements if you would like to try out type-safe criteria queries, a new
-        // feature in JPA 2.0        
+        // feature in JPA 2.0 
+        List<Predicate> condicoes =  new ArrayList<Predicate>();
+        /*condicoes.add( cb.isNotNull(equip.get("patrimonio")) ,        		
+    			cb.gt(equip.get("patrimonio"),0) ,
+    			cb.notEqual(equip.get("tipoEquip"), "swi"));
+        */		
         criteria.select(cb.construct(InventarioDTO.class, equip.get("patrimonio"), invent.get("inventarioKey").get("patrimonio"), 
         		invent.get("inventarioKey").get("referencia"), invent.get("classificacao"), invent.get("setorColeta"), 
         		equip.get("setorCod"), iSetor.get("nome"), equip.get("setor"), equip.get("idEquip"), equip.get("modelo"), 
-        		equip.get("fabricante"), equip.get("nrSerie"), equip.get("obs") , equip.get("dtBaixa"), equip.get("tipoEquip")) )
-        	.where( cb.isNotNull(equip.get("patrimonio")) ,
+        		equip.get("fabricante"), equip.get("nrSerie"), equip.get("obs") , equip.get("dtBaixa"), equip.get("tipoEquip")) );
+        // condicao por setor
+        if (codLocal > 0) {
+        	log.info("condicao para unico setor");
+	        criteria.where( cb.isNotNull(equip.get("patrimonio")) ,
+	        			cb.gt(equip.get("patrimonio"),0) ,
+	        			cb.notEqual(equip.get("tipoEquip"), "swi"),
+	        			cb.and( cb.or( cb.equal(equip.get("setorCod"), codLocal) , cb.equal(invent.get("setorColeta"),codLocal)
+	        					     ) 
+	        				  )
+	        			)
+	        .orderBy(cb.asc(equip.get("patrimonio")));
+        
+        } else {
+        	log.info("condicao para Relatorio de setores");
+        // para todos os setores
+	        criteria.where( cb.isNotNull(equip.get("patrimonio")) ,
         			cb.gt(equip.get("patrimonio"),0) ,
-        			cb.notEqual(equip.get("tipoEquip"), "swi"),
-        			cb.and( cb.or( cb.equal(equip.get("setorCod"), codLocal) , cb.equal(invent.get("setorColeta"),codLocal)
-        					     ) 
-        				  )
-        			) 
-        	.orderBy(cb.asc(equip.get("patrimonio")));
+        			cb.notEqual(equip.get("tipoEquip"), "swi"))
+        	.orderBy( cb.asc(invent.get("setorColeta")), cb.asc(equip.get("patrimonio")) ) ;
+        	
+        }
+        
+        	
         return em.createQuery(criteria).getResultList();
     }
 		
@@ -178,6 +200,12 @@ public class SisgepiConsulta implements Serializable {
 
 	public void setFiltroSetor(String filtroSetor) {
 		this.filtroSetor = filtroSetor;
+	}
+
+	public List<InventarioDTO> equipamentosPorAmbiente(Integer referencia) {
+		// TODO Auto-generated method stub
+		log.info("equipamentosPorAmbiente");
+		return equipamentosPorCodSetor(-10, referencia);
 	}
 
 	
