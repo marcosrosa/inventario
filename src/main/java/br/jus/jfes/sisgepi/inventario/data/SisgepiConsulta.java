@@ -136,7 +136,9 @@ public class SisgepiConsulta implements Serializable {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Setor> criteria = cb.createQuery(Setor.class);
         Root<Setor> setorq = criteria.from(Setor.class);
-        criteria.select(setorq).orderBy( cb.asc(setorq.get("nome")));
+        criteria.select(setorq).where(cb.equal(setorq.get("ativo"), 1))
+        .orderBy( cb.asc(setorq.get("lotacaoCod")),cb.asc(setorq.get("nome") ));
+        
         return em.createQuery(criteria).getResultList();		
 	}
 	
@@ -145,7 +147,7 @@ public class SisgepiConsulta implements Serializable {
         CriteriaQuery<Setor> criteria = cb.createQuery(Setor.class);
         Root<Setor> setorq = criteria.from(Setor.class);
         
-        criteria.select(setorq).where(cb.equal(setorq.get("andar"), andarParam)).orderBy( cb.asc(setorq.get("nome")));
+        criteria.select(setorq).where(cb.and(cb.equal(setorq.get("ativo"), 1) , cb.equal(setorq.get("andar"), andarParam))).orderBy( cb.asc(setorq.get("lotacaoCod")),cb.asc(setorq.get("nome") ));
         return em.createQuery(criteria).getResultList();		
 		
 	}

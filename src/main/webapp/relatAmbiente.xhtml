@@ -22,7 +22,19 @@
     template="/WEB-INF/templates/impressao.xhtml">
     <ui:define name="relat">
         <h2>Relação de Equipamentos:</h2>
-                        
+        
+             <table>
+	         <ui:repeat var="_equip" value="#{equipamentosPorAmbiente}">
+             <tr>
+             		<td>#{_equip.setorColeta}</td>
+             		<td>#{_equip.patrimonioEq}</td>
+             		<td>#{_equip.idEquip}</td>
+             		<td>#{_equip.fabricante}</td>
+             		<td>#{_equip.modelo}</td>
+             </tr>
+        	</ui:repeat>                
+             </table>
+        <ui:remove>
         <h:dataTable id="tabEquip" var="_equip" value="#{equipamentosPorAmbiente}"
             styleClass="simpletablestyle">
             <h:column>
@@ -46,5 +58,6 @@
                 #{_equip.modelo}
             </h:column>
         </h:dataTable>
+        </ui:remove>
      </ui:define>
 </ui:composition>

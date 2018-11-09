@@ -29,6 +29,12 @@ public class Setor implements Serializable {
 	@Column
 	private String ramal;
 	
+	@Column 
+	private boolean ativo;
+
+	@Column(name="LotacaoCod")
+	private Integer lotacaoCod;
+	
 	private static final long serialVersionUID = 1L;
 
 	public Setor() {
@@ -72,6 +78,22 @@ public class Setor implements Serializable {
 	public void setRamal(String ramal) {
 		this.ramal = ramal;
 	}
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public Integer getLotacaoCod() {
+		return lotacaoCod;
+	}
+
+	public void setLotacaoCod(Integer lotacaoCod) {
+		this.lotacaoCod = lotacaoCod;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,6 +101,7 @@ public class Setor implements Serializable {
 		result = prime * result + ((codSetor == null) ? 0 : codSetor.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
