@@ -35,20 +35,20 @@ import java.util.logging.Logger;
 @RequestScoped
 public class EquipamentoListProducer {
 
-    @Inject
-    private SisgepiConsulta sisgepiBusca;
 
     private List<InventarioDTO> equipamentos;
     
     private String rowClassesDef;
+
+    @Inject
+    private SisgepiConsulta sisgepiBusca;
 
     @Inject 
     private Logger logger;
     
     private Integer qtdColetado;
     private Integer qtdNaoEncontrado;
-    // @Named provides access the return value via the EL variable name "members" in the UI (e.g.
-    // Facelets or JSP view)
+ 
     @Produces
     @Named
     public List<InventarioDTO> getEquipamentos() {
@@ -63,9 +63,7 @@ public class EquipamentoListProducer {
     
     public void onMemberListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Inventario invent) {
         buscaEquipamentosSetor();
-    }
-    
-    
+    }    
     
     private void ajustaRowClasses() { 
     	  StringBuilder rowClasses = new StringBuilder();
