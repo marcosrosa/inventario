@@ -111,7 +111,8 @@ public class SisgepiConsulta implements Serializable {
         	log.info("condicao para unico setor");
 	        criteria.where( cb.isNotNull(equip.get("patrimonio")) ,
 	        			cb.gt(equip.get("patrimonio"),0) ,
-	        			cb.notEqual(equip.get("tipoEquip"), "swi"),
+	        			//cb.notEqual(equip.get("tipoEquip"), "swi"),
+	        			cb.isNull(equip.get("dtBaixa")),
 	        			cb.and( cb.or( cb.equal(equip.get("setorCod"), codLocal) , cb.equal(invent.get("setorColeta"),codLocal)
 	        					     ) 
 	        				  )
@@ -122,8 +123,7 @@ public class SisgepiConsulta implements Serializable {
         	log.info("condicao para Relatorio de setores");
         // para todos os setores
 	        criteria.where( cb.isNotNull(equip.get("patrimonio")) ,
-        			cb.gt(equip.get("patrimonio"),0) ,
-        			cb.notEqual(equip.get("tipoEquip"), "swi"))
+        			cb.gt(equip.get("patrimonio"),0) , cb.isNull(equip.get("dtBaixa")))
         	.orderBy( cb.asc(invent.get("setorColeta")), cb.asc(equip.get("patrimonio")) ) ;
         	
         }

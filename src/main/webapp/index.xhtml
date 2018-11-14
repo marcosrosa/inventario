@@ -78,6 +78,8 @@
             <h:panelGrid id="bemColetado" columns="2" styleClass="returnPesq">
             	<h:outputLabel value="Patrimonio:" style="background-color: #{coletaBean.isSetorCorreto() ? 'green' : 'yellow'}" />
             	<h:outputText value="#{coletaBean.coletado.plaqueta}" style="background-color: #{coletaBean.isBaixadoGepat() ? 'red' : ''}" />
+            	<h:outputLabel value="Nr.Série:"/>
+            	<h:outputText value="#{coletaBean.coletado.nrSerie}"/>
             	<h:outputLabel value="Coletados:"  />
             	<h:outputText id="outColetado" value="#{qtdColetado}" />
             	<h:outputLabel value="Faltam:"  />
@@ -119,17 +121,6 @@
                 <f:facet name="header">Fabricante</f:facet>
                 #{_equip.fabricante}
             </h:column>
-            <h:column rendered="false">
-                <f:facet name="header">REST URL</f:facet>
-                <a
-                    href="#{request.contextPath}/rest/members/#{_member.id}">/rest/members/#{_member.id}</a>
-            </h:column>
-            <ui:remove>
-	            <f:facet name="footer">
-	            REST URL for all members: <a
-	                    href="#{request.contextPath}/rest/members">/rest/members</a>
-	            </f:facet>
-            </ui:remove>
         </h:dataTable>
     </ui:define>
 </ui:composition>
