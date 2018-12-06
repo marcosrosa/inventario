@@ -86,7 +86,7 @@ public class EquipamentoListProducer {
     	        		 if (sisgepiBusca.getSetor().getCodSetor().equals(equip.getSetorEquipCod()))
     	        			 equip.setSetorDisplay("Setor Coletado: "+equip.getSetorColeta());
     	        		 else {
-    	        			 equip.setSetorDisplay("Setor Original: "+equip.getSetorEquip());
+    	        			 equip.setSetorDisplay("Setor Atual: "+equip.getSetorEquip());
     	        			 ++qtdColetado;
     	        		 }
     	        	 }
