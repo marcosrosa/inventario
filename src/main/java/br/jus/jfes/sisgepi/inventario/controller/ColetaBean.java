@@ -16,6 +16,7 @@
  */
 package br.jus.jfes.sisgepi.inventario.controller;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.logging.Logger;
 
@@ -87,9 +88,7 @@ public class ColetaBean {
         	}
         	// setor onde foi encontrado o bem
         	itemInvent.setSetorColeta(sisgepiBusca.getSetor().getCodSetor());
-        	// dataHora do registro
-        	itemInvent.setDataColeta(Calendar.getInstance().getTime());
-
+        	
         	// verifica baixa no gepat
         	Integer classific = 0;
         	if (coletado!=null && coletado.getSituacao()==2) {

@@ -3,6 +3,7 @@ package br.jus.jfes.sisgepi.inventario.modelo;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
@@ -38,13 +39,12 @@ public class Inventario implements Serializable {
 	private Integer setorColeta;
 	
 	@Column(name="data_coleta")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataColeta;
+	private LocalDateTime dataColeta;
 	
 	@MapsId("patrimonio")
 	@ManyToOne(optional=true)
 	@JoinColumn(name="patrimonio", referencedColumnName="plaqueta")
-	private BemGepat bemInformatica;
+	private BemGepat bemGepat;
 	
 	@ManyToOne()
 	@JoinColumn(name="setor_coleta", insertable=false,updatable=false)
@@ -54,6 +54,11 @@ public class Inventario implements Serializable {
 		super();
 		this.inventarioKey = new InventarioKey();
 		//this.classificacao = 0;
+	}
+
+	@PrePersist
+	private void ajustaDataHoraAtual() {
+		this.dataColeta = LocalDateTime.now();
 	}
 	
 	public Long getPatrimonio() {
@@ -88,11 +93,11 @@ public class Inventario implements Serializable {
 		this.setorColeta = setorColeta;
 	}
 
-	public Date getDataColeta() {
+	public LocalDateTime getDataColeta() {
 		return dataColeta;
 	}
 
-	public void setDataColeta(Date dataColeta) {
+	public void setDataColeta(LocalDateTime dataColeta) {
 		this.dataColeta = dataColeta;
 	}
 
@@ -104,16 +109,17 @@ public class Inventario implements Serializable {
 		this.setorClt = setorClt;
 	}
 
-	public BemGepat getBemInformatica() {
-		return bemInformatica;
+	public BemGepat getBemGepat() {
+		return bemGepat;
 	}
 
-	public void setBemInformatica(BemGepat bemInformatica) {
-		this.bemInformatica = bemInformatica;
+	public void setBemInformatica(BemGepat bemGepat) {
+		this.bemGepat = bemGepat;
 	}
 	
+	
 	public boolean isSetorCorreto() {
-		return setorColeta.equals(bemInformatica.getAmbitenteCod());
+		return setorColeta.equals(bemGepat.getAmbitenteCod());
 	}
 	  
 }
