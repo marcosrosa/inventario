@@ -61,9 +61,9 @@ public class EquipamentoListProducer {
     	return rowClassesDef;
     }
     
-    public void onMemberListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Inventario invent) {
+    /*public void onMemberListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Inventario invent) {
         buscaEquipamentosSetor();
-    }    
+    } */   
     
     private void ajustaRowClasses() { 
     	  StringBuilder rowClasses = new StringBuilder();

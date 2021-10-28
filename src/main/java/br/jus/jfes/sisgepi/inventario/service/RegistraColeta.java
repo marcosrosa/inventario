@@ -21,11 +21,10 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import br.jus.jfes.sisgepi.inventario.modelo.BemGepat;
-import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
+import br.jus.jfes.sisgepi.inventario.data.BemGepatRepository;
+import br.jus.jfes.sisgepi.inventario.modelo.GepatBem;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 
-import java.util.Date;
 import java.util.logging.Logger;
 
 // The @Stateless annotation eliminates the need for manual transaction demarcation
@@ -37,23 +36,16 @@ public class RegistraColeta {
 
     @Inject
     private EntityManager em;
-
-    @Inject
-    private Event<Inventario> inventarioEventSrc;
-
-    public void register(Inventario invent, Long patrimonio) throws Exception {
-        log.info("register (Inventario, Long patrim) -> patrimonio " + patrimonio);
-        BemGepat equip = buscaEquipamentoPorPatrimonio(patrimonio);
-        invent.setBemInformatica(equip);
-        em.persist(invent);
-        inventarioEventSrc.fire(invent);
-    }
     
-    public BemGepat buscaGepatPorPatrimonio(Long patr) {
-    	return em.find(BemGepat.class, patr);
-    }
+    @Inject 
+    private BemGepatRepository bemGepatRepos;
+
+    public void register(Inventario invent) {
+        log.info("register (Inventario, Long patrim) -> patrimonio " + invent.getPatrimonio());
+        GepatBem gepatBem = bemGepatRepos.getPorPatrimonio(invent.getPatrimonio());
+        invent.setBemInformatica(gepatBem);
+    	em.persist(invent);
+        //inventarioEventSrc.fire(invent);
+    }    
     
-    private BemGepat buscaEquipamentoPorPatrimonio(Long patr) {
-    	return em.find(BemGepat.class, patr);
-    }
 }

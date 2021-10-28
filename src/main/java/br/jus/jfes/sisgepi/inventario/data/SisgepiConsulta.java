@@ -21,6 +21,7 @@ import javax.persistence.criteria.Root;
 import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 import br.jus.jfes.sisgepi.inventario.modelo.InventarioDTO;
+import br.jus.jfes.sisgepi.inventario.modelo.ResumoSetor;
 import br.jus.jfes.sisgepi.inventario.modelo.Setor;
 
 @Named("sisgepiBusca")
@@ -97,15 +98,30 @@ public class SisgepiConsulta implements Serializable {
         Join<Inventario, Setor> iSetor = invent.join("setorClt", JoinType.LEFT);
         // Swap criteria statements if you would like to try out type-safe criteria queries, a new
         // feature in JPA 2.0 
-        List<Predicate> condicoes =  new ArrayList<Predicate>();
+        //List<Predicate> condicoes =  new ArrayList<Predicate>();
         /*condicoes.add( cb.isNotNull(equip.get("patrimonio")) ,        		
     			cb.gt(equip.get("patrimonio"),0) ,
     			cb.notEqual(equip.get("tipoEquip"), "swi"));
         */		
-        criteria.select(cb.construct(InventarioDTO.class, equip.get("patrimonio"), invent.get("inventarioKey").get("patrimonio"), 
-        		invent.get("inventarioKey").get("referencia"), invent.get("classificacao"), invent.get("setorColeta"), 
-        		equip.get("setorCod"), iSetor.get("nome"), equip.get("setor"), equip.get("idEquip"), equip.get("modelo"), 
-        		equip.get("fabricante"), equip.get("nrSerie"), equip.get("obs") , equip.get("dtBaixa"), equip.get("tipoEquip")) );
+        criteria.select(
+        	cb.construct(InventarioDTO.class, 
+        		equip.get("patrimonio"), 
+        		invent.get("inventarioKey").get("patrimonio"), 
+        		invent.get("inventarioKey").get("referencia"), 
+        		invent.get("classificacao"), 
+        		invent.get("setorColeta"), 
+        		equip.get("setorCod"), 
+        		iSetor.get("nome"), 
+        		equip.get("setor"), 
+        		equip.get("idEquip"), 
+        		equip.get("modelo"), 
+        		equip.get("fabricante"), 
+        		equip.get("nrSerie"), 
+        		equip.get("obs") , 
+        		equip.get("dtBaixa"), 
+        		equip.get("tipoEquip") 
+        	)
+        );
         // condicao por setor
         if (codLocal > 0) {
         	log.info("condicao para unico setor");
@@ -122,7 +138,7 @@ public class SisgepiConsulta implements Serializable {
         } else {
         	log.info("condicao para Relatorio de setores");
         // para todos os setores
-	        criteria.where( cb.isNotNull(equip.get("patrimonio")) ,
+	        criteria.where( cb.isNotNull(equip.get("patrimonio")) , cb.equal(invent.get("inventarioKey").get("referencia"), refInvent),
         			cb.gt(equip.get("patrimonio"),0) , cb.isNull(equip.get("dtBaixa")))
         	.orderBy( cb.asc(invent.get("setorColeta")), cb.asc(equip.get("patrimonio")) ) ;
         	
@@ -151,6 +167,28 @@ public class SisgepiConsulta implements Serializable {
         return em.createQuery(criteria).getResultList();		
 		
 	}
+	
+	public List<ResumoSetor> getQuantidadePorSetor(int iReferencia) {
+		
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<ResumoSetor> criteriaQuery = cb.createQuery(ResumoSetor.class);
+        Root<Inventario> invent = criteriaQuery.from(Inventario.class);
+        Join<Inventario, Setor> isetor = invent.join("setorClt");
+        
+        criteriaQuery.select(cb.construct
+        		( ResumoSetor.class, 
+        		  isetor.get("codSetor"),
+        		  isetor.get("nome"),
+        		  cb.count(invent.get("inventarioKey").get("patrimonio"))
+        		 )
+        ).where(cb.equal(invent.get("inventarioKey").get("referencia"), iReferencia));
+        criteriaQuery.groupBy(isetor.get("codSetor"), isetor.get("nome"));
+        criteriaQuery.orderBy(cb.asc(isetor.get("nome")));
+        
+               	
+        return em.createQuery(criteriaQuery).getResultList();
+    }
+	
 
 	public Setor getSetor() {
 		return setor;

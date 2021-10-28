@@ -23,28 +23,21 @@
     <title>${artifactId}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <h:outputStylesheet name="css/screen.css" />
+    <h:outputStylesheet name="css/primeflex.css" />
 </h:head>
 <h:body>
+	<ui:remove>
    <div id="relat">
         <ui:insert name="relat">
-              [Template content will be inserted here]
+              [menu para relatórios]
         </ui:insert>
     </div>
+    </ui:remove>
     <div id="container">
-    	<ui:remove>
-        <div class="dualbrand">
-            <img src="resources/gfx/dualbrand_logo.png" />
-        </div>
-        </ui:remove>
         <div id="content">
             <ui:insert name="content">
                     [Template content will be inserted here]
          </ui:insert>
-        </div>
-        <div id="footer">
-            <p>
-                Coletar Patrimonios para Inventario.<br />
-            </p>
         </div>
     </div>
 </h:body>

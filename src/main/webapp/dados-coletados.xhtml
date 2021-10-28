@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/WEB-INF/templates/default.xhtml">
+		<ui:define name="content">
+			<div class="p-grid">
+
+			<div class="p-col-3">
+				<div class="card">
+					<h:form id="bensColetadosFm">
+						<p:panel header="Ambientes">
+		            	<h:selectOneMenu id="somSetor" converter="#{setorConverter}"  style="width:100%"
+								value="#{sisgepiBusca.setor}" valueChangeListener="#{sisgepiBusca.setorChangeList}" >
+							<f:selectItems value="#{sisgepiBusca.setores}" var="_setor" 
+								itemLabel="#{_setor.nome}"
+								itemValue="#{_setor}" />
+						</h:selectOneMenu>
+						</p:panel>
+						<p:panel header="Patrimônios">
+							<h:inputTextarea value="#{coletaBean.listaPatrimonios}"  rows="30" style="width:100%;"/>
+						</p:panel>
+						<p:panel header="Importação">
+							<div style="text-align:center;">
+								<p:commandButton action="#{coletaBean.processarListaPatrimonio()}" 
+									value="Processar" update="pnlRelatErros, tbResAmbiente" />
+							</div>
+						</p:panel>			
+					</h:form>
+				</div>		
+			</div>
+
+			<div class="p-col-6">
+				<p:panel header="Relatório de Erros" id="pnlRelatErros">
+					<ul>
+						<ui:repeat var="linha" value="#{coletaBean.listaErros}">
+							<li> <h:outputLabel value="#{linha}" /> </li>
+						</ui:repeat>
+					</ul>
+				</p:panel>			
+			</div>
+
+			<div class="p-col-3">
+				<p:panel header="Resumo Por Ambiente">
+				<h:dataTable id="tbResAmbiente" var="_res" style="width: 100%" value="#{resumoSetorBean.listResumoSetor}"  headerClass="lnCabeca" rowClasses="lnimpar, lnpar">
+					<h:column>
+						<f:facet name="header">Codigo</f:facet>
+						<h:outputText value="#{_res.setorCod}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Setor</f:facet>
+						<h:outputText value="#{_res.setorDesc}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Qtd</f:facet>
+						<h:outputText value="#{_res.qtd}" />
+					</h:column>
+					
+				</h:dataTable>
+				</p:panel>
+			</div>
+			
+			</div>
+		</ui:define>
+	</ui:composition>
+</html>

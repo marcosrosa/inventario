@@ -44,7 +44,7 @@ public class Inventario implements Serializable {
 	@MapsId("patrimonio")
 	@ManyToOne(optional=true)
 	@JoinColumn(name="patrimonio", referencedColumnName="plaqueta")
-	private BemGepat bemGepat;
+	private GepatBem gepatBem;
 	
 	@ManyToOne()
 	@JoinColumn(name="setor_coleta", insertable=false,updatable=false)
@@ -54,6 +54,15 @@ public class Inventario implements Serializable {
 		super();
 		this.inventarioKey = new InventarioKey();
 		//this.classificacao = 0;
+	}
+	
+	public Inventario(Long patrimonio, Integer classificacao, Integer setorColeta) {
+		super();
+		this.inventarioKey = new InventarioKey();
+		this.inventarioKey.setPatrimonio(patrimonio);
+		this.classificacao = classificacao;
+		this.setorColeta = setorColeta;
+		
 	}
 
 	@PrePersist
@@ -109,17 +118,18 @@ public class Inventario implements Serializable {
 		this.setorClt = setorClt;
 	}
 
-	public BemGepat getBemGepat() {
-		return bemGepat;
+	public GepatBem getBemGepat() {
+		return gepatBem;
 	}
 
-	public void setBemInformatica(BemGepat bemGepat) {
-		this.bemGepat = bemGepat;
+	public void setBemInformatica(GepatBem gepatBem) {
+		this.gepatBem = gepatBem;
 	}
 	
 	
 	public boolean isSetorCorreto() {
-		return setorColeta.equals(bemGepat.getAmbitenteCod());
+		return true;
+		//return setorColeta.equals(gepatBem.getAmbitenteCod());
 	}
 	  
 }
