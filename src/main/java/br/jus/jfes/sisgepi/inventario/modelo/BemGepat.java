@@ -3,6 +3,7 @@ package br.jus.jfes.sisgepi.inventario.modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 
+
 /**
  * Entity implementation class for Entity: BemGepat
  *
@@ -21,7 +22,7 @@ public class BemGepat implements Serializable {
 	private Integer situacao;
 
 	@Column(name="AmbienteCod")
-	private Integer ambitenteCod;
+	private Integer ambienteCod;
 	
 	@Column(name="AmbienteDescr")
 	private String ambienteDescr;
@@ -54,8 +55,8 @@ public class BemGepat implements Serializable {
 	}
 
 
-	public Integer getAmbitenteCod() {
-		return ambitenteCod;
+	public Integer getAmbienteCod() {
+		return ambienteCod;
 	}
 
 	
