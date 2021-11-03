@@ -44,6 +44,9 @@
 			</div>
 
 			<div class="p-col-3">
+				<p:panel header="Total Coletado">
+					<p style="text-align: center">#{resumoSetorBean.totalColetado} de #{resumoSetorBean.totalGeral}</p>
+				</p:panel>
 				<p:panel header="Resumo Por Ambiente">
 				<h:dataTable id="tbResAmbiente" var="_res" style="width: 100%" value="#{resumoSetorBean.listResumoSetor}"  headerClass="lnCabeca" rowClasses="lnimpar, lnpar">
 					<h:column>
