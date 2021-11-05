@@ -40,7 +40,24 @@
 							<li> <h:outputLabel value="#{linha}" /> </li>
 						</ui:repeat>
 					</ul>
-				</p:panel>			
+				</p:panel>	
+				<p:dataTable id="detAmbiente" var="bem" value="#{bemSetorBean.bensSetor}" >
+					<p:column headerText="Patrimonio">
+						<h:outputText value="#{bem.plaqueta}" />
+					</p:column>
+					<p:column headerText="Descriçao">
+						<h:outputText value="#{bem.itemDescr}" />
+					</p:column>
+					<p:column headerText="Descriçao">
+						<h:outputText value="#{bem.descricaoCompl}" />
+					</p:column>
+					<p:column headerText="AmbienteCod">
+						<h:outputText value="#{bem.ambienteCod}" />
+					</p:column>
+					<p:column headerText="Ambiente Desc">
+						<h:outputText value="#{bem.ambienteDescr}" />
+					</p:column>
+				</p:dataTable>
 			</div>
 
 			<div class="p-col-3">
@@ -55,14 +72,16 @@
 					</h:column>
 					<h:column>
 						<f:facet name="header">Setor</f:facet>
-						<h:outputText value="#{_res.setorDesc}" />
+						<p:commandLink   action="#{bemSetorBean.listar}" value="#{_res.setorDesc}">
+							 <f:param name="pCodSetor" value="#{_res.setorCod}" />
+						</p:commandLink>
 					</h:column>
 					<h:column>
 						<f:facet name="header">Qtd</f:facet>
 						<h:outputText value="#{_res.qtd}" />
-					</h:column>
-					
+					</h:column>	
 				</h:dataTable>
+				
 				</p:panel>
 			</div>
 			

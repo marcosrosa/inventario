@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.jus.jfes.sisgepi.inventario.data.BemGepatRepository;
-import br.jus.jfes.sisgepi.inventario.modelo.BemGepat;
+import br.jus.jfes.sisgepi.inventario.modelo.GepatBem;
 
 @Path("/bem")
 @RequestScoped
@@ -25,15 +25,15 @@ public class InventarioResource {
 	@GET
 	@Path("/listasered")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<BemGepat> listTodosBens() {
-        return bemRepos.getBemGepatPorCodSetor(311);
+    public List<GepatBem> listTodosBens() {
+        return bemRepos.getGepatBemPorCodSetor(311);
     }
 	
     @GET
     @Path("/{id:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public BemGepat getBemPorPatrimonio(@PathParam("id") long id) {
-        BemGepat  b = bemRepos.getBemPorPatrimonio(id);
+    public GepatBem getBemPorPatrimonio(@PathParam("id") long id) {
+        GepatBem  b = bemRepos.getPorPatrimonio(id);
         if (b == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }

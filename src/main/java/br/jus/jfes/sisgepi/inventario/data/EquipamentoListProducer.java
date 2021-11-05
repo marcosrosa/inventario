@@ -106,6 +106,7 @@ public class EquipamentoListProducer {
         ajustaRowClasses();
     }
     
+    
     @Produces 
     @Named
     private Integer getQtdNaoEncontrado() {

@@ -9,7 +9,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import br.jus.jfes.sisgepi.inventario.modelo.BemGepat;
 import br.jus.jfes.sisgepi.inventario.modelo.GepatBem;
 
 @Stateless
@@ -27,17 +26,12 @@ public class BemGepatRepository {
 		return em.find(GepatBem.class, pat);
 	}
 	
-	
-	// so para o webservice.
-	public BemGepat getBemPorPatrimonio(Long pat) {
-		return em.find(BemGepat.class, pat);
-	}
-	
-	public List<BemGepat> getBemGepatPorCodSetor(Integer codLocal) {
+		
+	public List<GepatBem> getGepatBemPorCodSetor(Integer codLocal) {
 		
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<BemGepat> criteria = cb.createQuery(BemGepat.class);
-        Root<BemGepat> bem = criteria.from(BemGepat.class);
+        CriteriaQuery<GepatBem> criteria = cb.createQuery(GepatBem.class);
+        Root<GepatBem> bem = criteria.from(GepatBem.class);
         // condicao por setor
         criteria.where(	cb.equal(bem.get("ambienteCod"), codLocal) )
 	        .orderBy(cb.asc(bem.get("plaqueta")));

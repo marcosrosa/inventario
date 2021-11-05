@@ -16,7 +16,6 @@
  */
 package br.jus.jfes.sisgepi.inventario.controller;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -30,11 +29,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.PersistenceException;
 
 import br.jus.jfes.sisgepi.inventario.data.BemGepatRepository;
 import br.jus.jfes.sisgepi.inventario.data.SisgepiConsulta;
-import br.jus.jfes.sisgepi.inventario.modelo.BemGepat;
 import br.jus.jfes.sisgepi.inventario.modelo.GepatBem;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 import br.jus.jfes.sisgepi.inventario.service.RegistraColeta;
