@@ -41,21 +41,21 @@
 						</ui:repeat>
 					</ul>
 				</p:panel>	
-				<p:dataTable id="detAmbiente" var="bem" value="#{bemSetorBean.bensSetor}" >
+				<p:dataTable id="detAmbiente" var="bem" value="#{bemSetorBean.bensInvtSetor}" >
 					<p:column headerText="Patrimonio">
-						<h:outputText value="#{bem.plaqueta}" />
+						<h:outputText value="#{bem.patrimonio}" />
 					</p:column>
 					<p:column headerText="Descriçao">
-						<h:outputText value="#{bem.itemDescr}" />
+						<h:outputText value="#{bem.bemGepat.itemDescr}" />
 					</p:column>
 					<p:column headerText="Descriçao">
-						<h:outputText value="#{bem.descricaoCompl}" />
+						<h:outputText value="#{bem.bemGepat.descricaoCompl}" />
 					</p:column>
 					<p:column headerText="AmbienteCod">
-						<h:outputText value="#{bem.ambienteCod}" />
+						<h:outputText value="#{bem.bemGepat.ambienteCod}" />
 					</p:column>
 					<p:column headerText="Ambiente Desc">
-						<h:outputText value="#{bem.ambienteDescr}" />
+						<h:outputText value="#{bem.bemGepat.ambienteDescr}" />
 					</p:column>
 				</p:dataTable>
 			</div>

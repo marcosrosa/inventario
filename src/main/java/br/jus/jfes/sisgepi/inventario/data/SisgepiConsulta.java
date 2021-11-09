@@ -1,6 +1,7 @@
 package br.jus.jfes.sisgepi.inventario.data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -153,7 +154,7 @@ public class SisgepiConsulta implements Serializable {
         CriteriaQuery<Setor> criteria = cb.createQuery(Setor.class);
         Root<Setor> setorq = criteria.from(Setor.class);
         criteria.select(setorq).where(cb.equal(setorq.get("ativo"), 1))
-        .orderBy( cb.asc(setorq.get("lotacaoCod")),cb.asc(setorq.get("nome") ));
+        .orderBy( cb.asc(setorq.get("nome") ));
         
         return em.createQuery(criteria).getResultList();		
 	}
@@ -175,13 +176,16 @@ public class SisgepiConsulta implements Serializable {
         Root<Inventario> invent = criteriaQuery.from(Inventario.class);
         Join<Inventario, Setor> isetor = invent.join("setorClt");
         
+        LocalDateTime dataAtual = LocalDateTime.now().minusDays(1);
+        
         criteriaQuery.select(cb.construct
         		( ResumoSetor.class, 
         		  isetor.get("codSetor"),
         		  isetor.get("nome"),
         		  cb.count(invent.get("inventarioKey").get("patrimonio"))
         		 )
-        ).where(cb.equal(invent.get("inventarioKey").get("referencia"), iReferencia));
+        ).where(cb.and(cb.equal(invent.get("inventarioKey").get("referencia"), iReferencia), 
+        		       cb.greaterThan(invent.get("dataColeta"), dataAtual) ));
         criteriaQuery.groupBy(isetor.get("codSetor"), isetor.get("nome"));
         criteriaQuery.orderBy(cb.asc(isetor.get("nome")));
         

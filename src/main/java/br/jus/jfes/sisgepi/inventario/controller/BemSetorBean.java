@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import br.jus.jfes.sisgepi.inventario.data.BemGepatRepository;
 import br.jus.jfes.sisgepi.inventario.modelo.GepatBem;
+import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 
 @Model
 public class BemSetorBean {
@@ -20,6 +21,8 @@ public class BemSetorBean {
 	private BemGepatRepository bemGepatRepos;
 	
 	private List<GepatBem> bensSetor = new ArrayList<GepatBem>();
+	
+	private List<Inventario> bensInvtSetor = new ArrayList();
 	
 	private Long codSetor;
 	
@@ -49,7 +52,15 @@ public class BemSetorBean {
 		System.out.println("codigo sParamsetor "+sParam);
 		Integer iCodSetor = Integer.parseInt(sParam);
 		System.out.println("codigo setor "+iCodSetor);
-		bensSetor = bemGepatRepos.getGepatBemPorCodSetor(iCodSetor);
+		bensInvtSetor = bemGepatRepos.getInventarioPorSetorColetado(iCodSetor);
+	}
+
+	public List<Inventario> getBensInvtSetor() {
+		return bensInvtSetor;
+	}
+
+	public void setBensInvtSetor(List<Inventario> bensInvtSetor) {
+		this.bensInvtSetor = bensInvtSetor;
 	}
 	
 

@@ -7,9 +7,13 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
+import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
 import br.jus.jfes.sisgepi.inventario.modelo.GepatBem;
+import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 
 @Stateless
 public class BemGepatRepository {
@@ -40,6 +44,20 @@ public class BemGepatRepository {
         return em.createQuery(criteria).getResultList();
     }
 	
+	public List<Inventario> getInventarioPorSetorColetado(Integer codLocal) {
+		System.out.println("getInventarioPorSetorCol");
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Inventario> criteria = cb.createQuery(Inventario.class);
+        Root<Inventario> inventario = criteria.from(Inventario.class);
+        Join<Inventario, GepatBem> gepatBem = inventario.join("gepatBem", JoinType.INNER);
+        // condicao por setor
+        criteria.where(	cb.and(cb.equal(inventario.get("setorColeta"), codLocal) , 
+        		        cb.equal(inventario.get("inventarioKey").get("referencia"), 202100) ))
+	        .orderBy(cb.asc(inventario.get("inventarioKey").get("patrimonio")));
+                
+        	
+        return em.createQuery(criteria).getResultList();
+    }
 			
 
 }
