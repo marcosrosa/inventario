@@ -167,6 +167,11 @@ public class ColetaBean {
     	// atualiza a tab de patrimonios por Ambiente
     	inventarioEventSrc.fire(new Inventario());
     }
+    
+    public void consPlaqueta() {
+    	coletado = bemGepatRepos.getPorPatrimonio(patInformado);   
+    	patInformado = null;
+    }
 
     private boolean erroChaveDuplicada(Exception e) {
     	List<String> listaExcept = getListErrorMessage(e);
