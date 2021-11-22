@@ -11,33 +11,34 @@
 			<div class="p-grid">
 
 			<div class="p-col-12">
-				<p:panel header="Consulta Plaqueta">
+				<p:panel header="Consulta Plaqueta de Patrimônio">
 					<h:form id="consForm">
 						<h:inputText id="itPlaqueta" value="#{coletaBean.patInformado}" />
 						<p:commandButton value="Consultar" 
 							action="#{coletaBean.consPlaqueta}" 
-							update="itPlaqueta dadosBem"  
+							update="itPlaqueta dadosBem outErro"  
 							styleClass="p-ml-2"
 							oncomplete="document.getElementById('consForm:itPlaqueta').focus();"/>
 					</h:form>
 				</p:panel>
 				
 				<p:panel id="dadosBem" header="Dados do Bem">
-					<p:panelGrid columns="2">
+					<h:panelGroup id="outErro">						
+						<p:tag rendered="#{!coletaBean.encontrado}" styleClass="p-ml-2" severity="danger" value="Patrimônio Não Encontrado: #{coletaBean.coletado.plaqueta} "></p:tag>
+						
+					</h:panelGroup>	
+					<p:panelGrid columns="2" rendered="#{coletaBean.encontrado}">
 						<h:outputLabel value="Plaqueta" />
 						<h:outputText value="#{coletaBean.coletado.plaqueta}" />
-						<h:outputLabel value="Situação" />
-						<h:outputText value="#{coletaBean.coletado.situacao}" />
+						
 						<h:outputLabel value="Descrição" />
 						<h:outputText value="#{coletaBean.coletado.itemDescr}" />
+						
 						<h:outputLabel value="Complemento" />
 						<h:outputText value="#{coletaBean.coletado.descricaoCompl}" />
-						<h:outputLabel value="Marca" />
-						<h:outputText value="#{coletaBean.coletado.marca}" />
-						<h:outputLabel value="Cod Ambiente" />
-						<h:outputText value="#{coletaBean.coletado.ambienteCod}" />
-						<h:outputLabel value="Ambiente" />
-						<h:outputText value="#{coletaBean.coletado.ambienteDescr}" />
+						
+						<h:outputText value="Ambiente" />
+						<h:outputText value="#{coletaBean.coletado.ambienteLabel}" />
 					</p:panelGrid>
 				</p:panel>
 				

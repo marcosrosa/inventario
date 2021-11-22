@@ -11,7 +11,6 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
-import br.jus.jfes.sisgepi.inventario.modelo.Equipamento;
 import br.jus.jfes.sisgepi.inventario.modelo.GepatBem;
 import br.jus.jfes.sisgepi.inventario.modelo.Inventario;
 
@@ -27,7 +26,10 @@ public class BemGepatRepository {
 	
 	
 	public GepatBem getPorPatrimonio(Long pat) {
-		return em.find(GepatBem.class, pat);
+		GepatBem bem = null;
+		if (null != pat && pat>0)
+			bem =  em.find(GepatBem.class, pat);
+		return bem;
 	}
 	
 		

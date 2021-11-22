@@ -18,6 +18,11 @@ public class GepatBem implements Serializable {
 		super();
 	}
 	
+	public GepatBem(Long patrimonio) {
+		super();
+		this.plaqueta = patrimonio;
+	}
+
 	@Id
 	@Column(name="Plaqueta")
 	private Long plaqueta;
@@ -46,6 +51,8 @@ public class GepatBem implements Serializable {
 	@Column(name="ValorResidual")
 	private Double valorResidual;
 	
+	@Transient
+	private String ambienteLabel;
 	
 	public Long getPlaqueta() {
 		return plaqueta;
@@ -114,6 +121,12 @@ public class GepatBem implements Serializable {
 		} else if (!plaqueta.equals(other.plaqueta))
 			return false;
 		return true;
+	}
+
+	public String getAmbienteLabel() {
+		if (ambienteCod != null)
+			return ambienteCod + " - " + ambienteDescr;
+		return null;
 	}
 
    

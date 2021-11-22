@@ -73,6 +73,8 @@ public class ColetaBean {
     
     private boolean verListaBens = true;
     
+    private boolean encontrado = true;
+    
     private List<String> listaErros = new ArrayList<String>();
     
     private String listaPatrimonios = "";
@@ -169,7 +171,13 @@ public class ColetaBean {
     }
     
     public void consPlaqueta() {
-    	coletado = bemGepatRepos.getPorPatrimonio(patInformado);   
+    	coletado = bemGepatRepos.getPorPatrimonio(patInformado);
+    	// se nao encontrar marca encontrado=false -> exibir a mssg erro
+    	if (coletado == null) {
+    		encontrado = false;
+    		coletado = new GepatBem(patInformado);
+    	}
+    	// para limpar o campo da Plaqueta
     	patInformado = null;
     }
 
@@ -273,6 +281,14 @@ public class ColetaBean {
 
 	public void setListaErros(List<String> listaErros) {
 		this.listaErros = listaErros;
+	}
+
+	public boolean isEncontrado() {
+		return encontrado;
+	}
+
+	public void setEncontrado(boolean encontrado) {
+		this.encontrado = encontrado;
 	}
 		
 
