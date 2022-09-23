@@ -54,6 +54,9 @@ public class GepatBem implements Serializable {
 	@Transient
 	private String ambienteLabel;
 	
+	@Transient 
+	private TransferenciaUsuario transfUsuario; 
+	
 	public Long getPlaqueta() {
 		return plaqueta;
 	}
@@ -127,6 +130,14 @@ public class GepatBem implements Serializable {
 		if (ambienteCod != null)
 			return ambienteCod + " - " + ambienteDescr;
 		return null;
+	}
+
+	public TransferenciaUsuario getTransfUsuario() {
+		return transfUsuario;
+	}
+
+	public void setTransfUsuario(TransferenciaUsuario transfUsuario) {
+		this.transfUsuario = transfUsuario;
 	}
 
    

@@ -24,7 +24,6 @@ public class BemGepatRepository {
 	@Inject
 	private EntityManager em;
 	
-	
 	public GepatBem getPorPatrimonio(Long pat) {
 		GepatBem bem = null;
 		if (null != pat && pat>0)
@@ -61,5 +60,4 @@ public class BemGepatRepository {
         return em.createQuery(criteria).getResultList();
     }
 			
-
 }

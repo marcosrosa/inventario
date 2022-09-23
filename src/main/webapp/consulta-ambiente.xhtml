@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/WEB-INF/templates/default.xhtml">
+		<ui:define name="content">
+		
+			<div class="p-grid">
+
+			<div class="p-col-12">
+				<p:panel header="Consulta Por Ambiente">
+					<h:form id="consForm">
+			            <h:outputLabel value="Ambiente:" />
+			            
+			            <h:inputText value="#{ambienteBean.codAmbSel}" />
+			            
+			            <h:selectOneMenu id="somAmbiente" converter="#{ambienteConverter}" style="width:400px;font-size:0.5em;"
+								value="#{ambienteBean.ambienteSel}" valueChangeListener="#{ambienteBean.ambienteChangeList}" >
+								<f:selectItems value="#{ambienteBean.listaAmbientes}" var="_amb" 
+									itemLabel="#{_amb.descricao}"
+									itemValue="#{_amb}" />
+								<f:ajax listener="#{ambienteBean.ambienteChangeList}" excecute="this"  render="view-ambiente" />
+						</h:selectOneMenu>
+						
+					</h:form>
+				</p:panel>
+				
+				<p:panel id="dadosAmb" header="Dados do Ambiente">
+					<h:panelGroup id="view-ambiente">						
+						
+					</h:panelGroup>	
+				</p:panel>
+				
+			</div>
+			
+			</div>
+		</ui:define>
+	</ui:composition>
+</html>
