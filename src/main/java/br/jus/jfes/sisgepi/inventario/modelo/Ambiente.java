@@ -20,9 +20,15 @@ public class Ambiente implements Serializable {
 		super();
 	}
 	
+	public Ambiente(Integer cod, String desc) {
+		this.codigo = cod;
+		this.descricao = desc;
+	}
+	
+	
 	@Id
 	@Column(name="AmbienteCod")
-	private Long codigo;
+	private Integer codigo;
 	
 	@Column(name="AmbienteDescr")
 	private String descricao;
@@ -36,10 +42,10 @@ public class Ambiente implements Serializable {
 	@Column(name="Situacao")
 	private int situacao;
 
-	public Long getCodigo() {
+	public Integer getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(Long codigo) {
+	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
 	public String getDescricao() {
@@ -81,5 +87,11 @@ public class Ambiente implements Serializable {
 		Ambiente other = (Ambiente) obj;
 		return Objects.equals(codigo, other.codigo);
 	}	
+	
+	@Override
+	public String toString() {
+		return codigo.toString();
+	}
+
    
 }

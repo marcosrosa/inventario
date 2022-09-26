@@ -1,6 +1,7 @@
 package br.jus.jfes.sisgepi.inventario.modelo;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class TransferenciaUsuario {
 	
@@ -8,13 +9,21 @@ public class TransferenciaUsuario {
 		
 	}
 	
+	public TransferenciaUsuario(Timestamp data, Long codUsuario, String usuNome) {
+		this.dataReceb = Calendar.getInstance();
+		this.dataReceb.setTimeInMillis(data.getTime());
+		this.usuarioRec = usuNome;
+		this.codUsuarioRec = codUsuario;
+	}
+	
 	private Long sequencial;
 	private Integer codAmbOrigem;
 	private Integer codAmbDestino;
 	
-	private LocalDateTime dataReceb;
+	//private LocalDateTime dataReceb;
+	private Calendar dataReceb;
 	private Long   codUsuarioRec;
-	private String nomeUsuarioRec;
+	private String usuarioRec;
 	
 	public Long getSequencial() {
 		return sequencial;
@@ -34,10 +43,10 @@ public class TransferenciaUsuario {
 	public void setCodAmbDestino(Integer codAmbDestino) {
 		this.codAmbDestino = codAmbDestino;
 	}
-	public LocalDateTime getDataReceb() {
+	public Calendar getDataReceb() {
 		return dataReceb;
 	}
-	public void setDataReceb(LocalDateTime dataReceb) {
+	public void setDataReceb(Calendar dataReceb) {
 		this.dataReceb = dataReceb;
 	}
 	public Long getCodUsuarioRec() {
@@ -46,11 +55,11 @@ public class TransferenciaUsuario {
 	public void setCodUsuarioRec(Long codUsuarioRec) {
 		this.codUsuarioRec = codUsuarioRec;
 	}
-	public String getNomeUsuarioRec() {
-		return nomeUsuarioRec;
+	public String getUsuarioRec() {
+		return usuarioRec;
 	}
-	public void setNomeUsuarioRec(String nomeUsuarioRec) {
-		this.nomeUsuarioRec = nomeUsuarioRec;
+	public void setUsuarioRec(String usuarioRec) {
+		this.usuarioRec = usuarioRec;
 	}
 	
 	

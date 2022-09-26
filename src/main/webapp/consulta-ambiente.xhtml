@@ -15,23 +15,56 @@
 					<h:form id="consForm">
 			            <h:outputLabel value="Ambiente:" />
 			            
-			            <h:inputText value="#{ambienteBean.codAmbSel}" />
+			            <h:inputText id="codAmbiente" value="#{ambienteBean.ambienteSel.codigo}" />
 			            
-			            <h:selectOneMenu id="somAmbiente" converter="#{ambienteConverter}" style="width:400px;font-size:0.5em;"
-								value="#{ambienteBean.ambienteSel}" valueChangeListener="#{ambienteBean.ambienteChangeList}" >
+			            <h:selectOneMenu id="somAmbiente" converter="#{ambienteConverter}" style="margin-left:8px;width:400px;font-size:0.8em;"
+								value="#{ambienteBean.ambienteSel}">
 								<f:selectItems value="#{ambienteBean.listaAmbientes}" var="_amb" 
 									itemLabel="#{_amb.descricao}"
 									itemValue="#{_amb}" />
-								<f:ajax listener="#{ambienteBean.ambienteChangeList}" excecute="this"  render="view-ambiente" />
+								<f:ajax listener="#{ambienteBean.ambienteChangeList}" execute="@this, chkUltimo"  render="codAmbiente view-ambiente" />
 						</h:selectOneMenu>
+						
+						<h:selectBooleanCheckbox id="chkUltimo" value="#{ambienteBean.ultMov}" >
+							<h:outputLabel value="Somente Último Movimento" style="margin-left:8px"/>
+						</h:selectBooleanCheckbox>
 						
 					</h:form>
 				</p:panel>
 				
-				<p:panel id="dadosAmb" header="Dados do Ambiente">
-					<h:panelGroup id="view-ambiente">						
+				<p:panel id="view-ambiente" header="Bens do Ambiente - #{ambienteBean.quantidade}">
+					<h:dataTable value="#{ambienteBean.bensAmbiente}" var="_bemAmb" rowClasses="lnimpar, lnpar"> 
+						<h:column>
+							<f:facet name="header">Plaqueta</f:facet>
+							<h:outputText value="#{_bemAmb.plaqueta}" />
+						</h:column>
+						<ui:remove>
+						<h:column>
+							<f:facet name="header">Num Série</f:facet>
+							<h:outputText value="#{_bemAmb.nrSerie}" />
+						</h:column>
+						</ui:remove>
+						<h:column>
+							<f:facet name="header">Descrição</f:facet>
+							<h:outputText value="#{_bemAmb.itemDescr}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Complemento</f:facet>
+							<h:outputText value="#{_bemAmb.descricaoCompl}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">UsuarioReceb </f:facet>
+							<h:outputText value="(#{_bemAmb.transfUsuario.codUsuarioRec}) #{_bemAmb.transfUsuario.usuarioRec}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Data Receb </f:facet>
+							<h:outputText value="#{_bemAmb.transfUsuario.dataReceb.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR"
+									timeZone="Brazil/East" />
+							</h:outputText>
+						</h:column>
 						
-					</h:panelGroup>	
+					</h:dataTable>
 				</p:panel>
 				
 			</div>

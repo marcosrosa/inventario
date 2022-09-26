@@ -1,5 +1,6 @@
 package br.jus.jfes.sisgepi.inventario.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -10,6 +11,7 @@ import javax.inject.Named;
 
 import br.jus.jfes.sisgepi.inventario.data.AmbienteRepository;
 import br.jus.jfes.sisgepi.inventario.modelo.Ambiente;
+import br.jus.jfes.sisgepi.inventario.modelo.GepatBem;
 
 @Named
 @RequestScoped
@@ -23,6 +25,10 @@ public class AmbienteBean {
 	
 	private Integer codAmbSel;
 	
+	private Integer quantidade = 0;
+	
+	private Boolean ultMov = true;
+	
 	private List<Ambiente> listaAmbientes;
 
 	@Inject
@@ -30,6 +36,8 @@ public class AmbienteBean {
 	
 	@Inject 
 	private AmbienteRepository ambienteRep;
+		
+	private List<GepatBem> bensAmbiente = new ArrayList<>();
 	
 	public Ambiente getAmbienteSel() {
 		return ambienteSel;
@@ -55,14 +63,44 @@ public class AmbienteBean {
 		this.listaAmbientes = listaAmbientes;
 	}
 	
+	public List<GepatBem> getBensAmbiente() {
+		return this.bensAmbiente;
+	}
+	
+	public void setBensAmbiente(List<GepatBem> bens) {
+		this.bensAmbiente = bens;
+	}
+	
     public void ambienteChangeList() {
-    	logger.info("ambiente cod " + ambienteSel.getCodigo());
+    	if (ambienteSel.getCodigo() > 0) {
+    		logger.info("ambiente cod " + ambienteSel.getCodigo());
+    		bensAmbiente = ambienteRep.getBensAmbienteTransf(ambienteSel.getCodigo(), ultMov);
+    		//bensAmbiente = bemRep.getGepatBemPorCodSetor(ambienteSel.getCodigo());
+    	}
     }
-
 	
 	@PostConstruct
 	private void executar() {
-		listaAmbientes = ambienteRep.listarTodos();				
+		ambienteSel = new Ambiente(-1, "Não Informado");
+		listaAmbientes = ambienteRep.listarTodos();
+	}
+
+	public Integer getQuantidade() {
+		if (bensAmbiente != null)
+			return bensAmbiente.size();
+		return 0;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public Boolean getUltMov() {
+		return ultMov;
+	}
+
+	public void setUltMov(Boolean ultMov) {
+		this.ultMov = ultMov;
 	}
 
 }
