@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/WEB-INF/templates/default.xhtml">
+		<ui:define name="content">
+		
+			<div class="p-grid">
+
+			<div class="p-col-12">
+				<p:panel header="Consulta Por Ambiente">
+					<h:form id="consForm">
+			            <h:outputLabel value="Ambiente:" />
+			            
+			            <h:inputText id="codAmbiente" value="#{ambienteBean.ambienteSel.codigo}" />
+			            
+			            <h:selectOneMenu id="somAmbiente" converter="#{ambienteConverter}" style="margin-left:8px;width:400px;font-size:0.8em;"
+								value="#{ambienteBean.ambienteSel}">
+								<f:selectItems value="#{ambienteBean.listaAmbientes}" var="_amb" 
+									itemLabel="#{_amb.descricao}"
+									itemValue="#{_amb}" />
+								<f:ajax listener="#{ambienteBean.ambienteChangeList}" execute="@this, chkUltimo"  render="codAmbiente view-ambiente" />
+						</h:selectOneMenu>
+						
+						<h:selectBooleanCheckbox id="chkUltimo" value="#{ambienteBean.ultMov}" >
+							<h:outputLabel value="Somente Último Movimento" style="margin-left:8px"/>
+						</h:selectBooleanCheckbox>
+						
+					</h:form>
+				</p:panel>
+				
+				<p:panel id="view-ambiente" header="Bens do Ambiente - #{ambienteBean.quantidade}">
+					<h:dataTable value="#{ambienteBean.bensAmbiente}" var="_bemAmb" rowClasses="lnimpar, lnpar"> 
+						<h:column>
+							<f:facet name="header">Plaqueta</f:facet>
+							<h:outputText value="#{_bemAmb.plaqueta}" />
+						</h:column>
+						<ui:remove>
+						<h:column>
+							<f:facet name="header">Num Série</f:facet>
+							<h:outputText value="#{_bemAmb.nrSerie}" />
+						</h:column>
+						</ui:remove>
+						<h:column>
+							<f:facet name="header">Descrição</f:facet>
+							<h:outputText value="#{_bemAmb.itemDescr}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Complemento</f:facet>
+							<h:outputText value="#{_bemAmb.descricaoCompl}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">UsuarioReceb </f:facet>
+							<h:outputText value="(#{_bemAmb.transfUsuario.codUsuarioRec}) #{_bemAmb.transfUsuario.usuarioRec}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Data Receb </f:facet>
+							<h:outputText value="#{_bemAmb.transfUsuario.dataReceb.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR"
+									timeZone="Brazil/East" />
+							</h:outputText>
+						</h:column>
+						
+					</h:dataTable>
+				</p:panel>
+				
+			</div>
+			
+			</div>
+		</ui:define>
+	</ui:composition>
+</html>

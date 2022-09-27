@@ -33,6 +33,9 @@ public class GepatBem implements Serializable {
 	@Column(name="AmbienteCod")
 	private Integer ambienteCod;
 	
+	@Column(name="CodGrupoMaterial")
+	private Integer codGrupo;
+	
 	@Column(name="AmbienteDescr")
 	private String ambienteDescr;
 	
@@ -53,6 +56,9 @@ public class GepatBem implements Serializable {
 	
 	@Transient
 	private String ambienteLabel;
+	
+	@Transient 
+	private TransferenciaUsuario transfUsuario; 
 	
 	public Long getPlaqueta() {
 		return plaqueta;
@@ -129,5 +135,20 @@ public class GepatBem implements Serializable {
 		return null;
 	}
 
+	public TransferenciaUsuario getTransfUsuario() {
+		return transfUsuario;
+	}
+
+	public void setTransfUsuario(TransferenciaUsuario transfUsuario) {
+		this.transfUsuario = transfUsuario;
+	}
+
+	public Integer getCodGrupo() {
+		return codGrupo;
+	}
+
+	public void setCodGrupo(Integer codGrupo) {
+		this.codGrupo = codGrupo;
+	}
    
 }
