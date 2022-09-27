@@ -29,6 +29,8 @@ public class AmbienteBean {
 	
 	private Boolean ultMov = true;
 	
+	private Boolean naoEncontrado = false;
+	
 	private boolean carregarLista = true;
 	//private List<Ambiente> listaAmbientes;
 
@@ -88,6 +90,8 @@ public class AmbienteBean {
     		ambienteSel = ambienteRep.porCodigo(codAmbSel);
     		if (ambienteSel!=null)
     			bensAmbiente = ambienteRep.getBensAmbienteTransf(ambienteSel.getCodigo(), ultMov);
+    		else 
+    			naoEncontrado = true;
     		carregarLista=false;
     	}
     	
@@ -116,6 +120,14 @@ public class AmbienteBean {
 
 	public void setUltMov(Boolean ultMov) {
 		this.ultMov = ultMov;
+	}
+
+	public Boolean getNaoEncontrado() {
+		return naoEncontrado;
+	}
+
+	public void setNaoEncontrado(Boolean naoEncontrado) {
+		this.naoEncontrado = naoEncontrado;
 	}
 
 }

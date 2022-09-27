@@ -34,7 +34,7 @@
 						<h:commandButton action="#{ambienteBean.ambienteChangeCod()}" value="Consultar" />
 					</h:form>
 				</p:panel>
-				
+				<p:panel rendered="#{ambienteBean.naoEncontrado}" header="AMBIENTE NAO ENCONTRADO" style="color:red"></p:panel>
 				<p:panel id="view-ambiente" header="Bens do Ambiente - #{ambienteBean.quantidade}">
 					<h:dataTable value="#{ambienteBean.bensAmbiente}" var="_bemAmb" rowClasses="lnimpar, lnpar"> 
 						<h:column>
