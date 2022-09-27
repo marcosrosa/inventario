@@ -46,7 +46,7 @@ public class BemGepatRepository {
         return em.createQuery(criteria).getResultList();
     }
 	
-	public List<Inventario> getInventarioPorSetorColetado(Integer codLocal) {
+	public List<Inventario> getInventarioPorSetorColetado(Integer codLocal) {	
 		System.out.println("getInventarioPorSetorCol");
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Inventario> criteria = cb.createQuery(Inventario.class);
