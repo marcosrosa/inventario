@@ -13,22 +13,25 @@
 			<div class="p-col-12">
 				<p:panel header="Consulta Por Ambiente">
 					<h:form id="consForm">
-			            <h:outputLabel value="Ambiente:" />
-			            
-			            <h:inputText id="codAmbiente" value="#{ambienteBean.ambienteSel.codigo}" />
-			            
-			            <h:selectOneMenu id="somAmbiente" converter="#{ambienteConverter}" style="margin-left:8px;width:400px;font-size:0.8em;"
-								value="#{ambienteBean.ambienteSel}">
-								<f:selectItems value="#{ambienteBean.listaAmbientes}" var="_amb" 
-									itemLabel="#{_amb.descricao}"
-									itemValue="#{_amb}" />
-								<f:ajax listener="#{ambienteBean.ambienteChangeList}" execute="@this, chkUltimo"  render="codAmbiente view-ambiente" />
-						</h:selectOneMenu>
-						
 						<h:selectBooleanCheckbox id="chkUltimo" value="#{ambienteBean.ultMov}" >
 							<h:outputLabel value="Somente Último Movimento" style="margin-left:8px"/>
 						</h:selectBooleanCheckbox>
+
+			            <h:outputLabel value="Ambiente:" style="margin-left:8px"/>
+			            
+			            <h:inputText id="codAmbiente" value="#{ambienteBean.codAmbSel}" >
+			            	<f:ajax event="change" listener="#{ambienteBean.ambienteChangeCod()}" execute="@this, chkUltimo" render="somAmbiente2 view-ambiente"/>
+			            </h:inputText>
+			            												
+			            <h:selectOneMenu id="somAmbiente2" converter="#{ambienteConverter}" style="margin-left:8px;width:400px;font-size:0.8em;"
+								value="#{ambienteBean.ambienteSel}">
+								<f:selectItems value="#{ambienteList.ambientes}" var="_amb2" 
+									itemLabel="#{_amb2.descricao}"
+									itemValue="#{_amb2}" />
+								<f:ajax listener="#{ambienteBean.ambienteChangeList}" execute="@this, chkUltimo"  render="codAmbiente view-ambiente" />
+						</h:selectOneMenu>
 						
+						<h:commandButton action="#{ambienteBean.ambienteChangeCod()}" value="Consultar" />
 					</h:form>
 				</p:panel>
 				
