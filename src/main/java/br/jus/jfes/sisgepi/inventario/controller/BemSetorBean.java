@@ -22,7 +22,7 @@ public class BemSetorBean {
 	
 	private List<GepatBem> bensSetor = new ArrayList<GepatBem>();
 	
-	private List<Inventario> bensInvtSetor = new ArrayList();
+	private List<Inventario> bensInvtSetor = new ArrayList<>();
 	
 	private Long codSetor;
 	
