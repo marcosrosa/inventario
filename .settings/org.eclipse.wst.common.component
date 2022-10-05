@@ -1,59 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< HEAD
                         
     
+=======
+                    
+>>>>>>> refs/remotes/mygithub/master
     
     
     
     <wb-module deploy-name="inventario">
+<<<<<<< HEAD
                                                 
         
+=======
+                                        
+>>>>>>> refs/remotes/mygithub/master
         
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+<<<<<<< HEAD
                                                 
         
+=======
+                                        
+>>>>>>> refs/remotes/mygithub/master
         
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+<<<<<<< HEAD
                                                 
         
+=======
+                                        
+>>>>>>> refs/remotes/mygithub/master
         
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+<<<<<<< HEAD
                                                 
         
+=======
+                                        
+>>>>>>> refs/remotes/mygithub/master
         
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+<<<<<<< HEAD
                                 
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-test-sources/test-annotations"/>
                                                 
+=======
+                        
+>>>>>>> refs/remotes/mygithub/master
         
+<<<<<<< HEAD
+=======
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-test-sources/test-annotations"/>
+                                        
+>>>>>>> refs/remotes/mygithub/master
         
         
         
         <property name="context-root" value="inventario"/>
+<<<<<<< HEAD
                                                 
         
+=======
+                                        
+>>>>>>> refs/remotes/mygithub/master
         
         
         
         <property name="java-output-path" value="/inventario/target/classes"/>
+<<<<<<< HEAD
                                             
     
+=======
+                                    
+>>>>>>> refs/remotes/mygithub/master
     
     
     
     </wb-module>
+<<<<<<< HEAD
                     
 
+=======
+                
+>>>>>>> refs/remotes/mygithub/master
 
 
 

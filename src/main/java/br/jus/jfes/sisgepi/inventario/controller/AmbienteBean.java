@@ -29,13 +29,18 @@ public class AmbienteBean {
 	
 	private Boolean ultMov = true;
 	
-	private List<Ambiente> listaAmbientes;
+	private Boolean naoEncontrado = false;
+	
+	private boolean carregarLista = true;
+	//private List<Ambiente> listaAmbientes;
 
 	@Inject
     private Logger logger;
 	
 	@Inject 
 	private AmbienteRepository ambienteRep;
+	
+	private String ambienteStr;
 		
 	private List<GepatBem> bensAmbiente = new ArrayList<>();
 	
@@ -55,13 +60,13 @@ public class AmbienteBean {
 		this.codAmbSel = codAmbSel;
 	}
 
-	public List<Ambiente> getListaAmbientes() {
+/*	public List<Ambiente> getListaAmbientes() {
 		return listaAmbientes;
 	}
 
 	public void setListaAmbientes(List<Ambiente> listaAmbientes) {
 		this.listaAmbientes = listaAmbientes;
-	}
+	} */
 	
 	public List<GepatBem> getBensAmbiente() {
 		return this.bensAmbiente;
@@ -72,17 +77,31 @@ public class AmbienteBean {
 	}
 	
     public void ambienteChangeList() {
-    	if (ambienteSel.getCodigo() > 0) {
-    		logger.info("ambiente cod " + ambienteSel.getCodigo());
+    	if (carregarLista && ambienteSel.getCodigo() > 0) {
+    		logger.info("List ambiente cod " + ambienteSel.getCodigo());
+    		codAmbSel = ambienteSel.getCodigo();
     		bensAmbiente = ambienteRep.getBensAmbienteTransf(ambienteSel.getCodigo(), ultMov);
-    		//bensAmbiente = bemRep.getGepatBemPorCodSetor(ambienteSel.getCodigo());
     	}
     }
-	
+    
+    public void ambienteChangeCod() {
+    	if (ambienteSel.getCodigo() > 0) {
+    		logger.info("COD ambiente cod " + codAmbSel);
+    		ambienteSel = ambienteRep.porCodigo(codAmbSel);
+    		if (ambienteSel!=null)
+    			bensAmbiente = ambienteRep.getBensAmbienteTransf(ambienteSel.getCodigo(), ultMov);
+    		else 
+    			naoEncontrado = true;
+    		carregarLista=false;
+    	}
+    	
+    }
+
+    	
 	@PostConstruct
 	private void executar() {
 		ambienteSel = new Ambiente(-1, "Não Informado");
-		listaAmbientes = ambienteRep.listarTodos();
+		//listaAmbientes = ambienteRep.listarTodos();
 	}
 
 	public Integer getQuantidade() {
@@ -101,6 +120,14 @@ public class AmbienteBean {
 
 	public void setUltMov(Boolean ultMov) {
 		this.ultMov = ultMov;
+	}
+
+	public Boolean getNaoEncontrado() {
+		return naoEncontrado;
+	}
+
+	public void setNaoEncontrado(Boolean naoEncontrado) {
+		this.naoEncontrado = naoEncontrado;
 	}
 
 }
