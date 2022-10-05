@@ -32,17 +32,21 @@ public class BemGepatRepository {
 	}
 	
 		
-	public List<GepatBem> getGepatBemPorCodSetor(Integer codLocal) {
+	public List<GepatBem> getGepatBemPorCodSetor(Integer codLocal, boolean soInformatica) {
 		
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<GepatBem> criteria = cb.createQuery(GepatBem.class);
         Root<GepatBem> bem = criteria.from(GepatBem.class);
         // condicao por CodigoAmbiente no Gepat / grupo 43 Informatica / situacao = ativo
-        criteria.where(	cb.equal(bem.get("ambienteCod"), codLocal), 
-        		 		cb.equal(bem.get("codGrupo"), 43),
-        		 		cb.equal(bem.get("situacao"), 1))
-	        .orderBy(cb.asc(bem.get("plaqueta")));
-                
+        if (soInformatica)
+	        criteria.where(	cb.equal(bem.get("ambienteCod"), codLocal), 
+	        		 		cb.equal(bem.get("codGrupo"), 43),
+	        		 		cb.equal(bem.get("situacao"), 1))
+		        .orderBy(cb.asc(bem.get("plaqueta")));
+        else 
+        	criteria.where(	cb.equal(bem.get("ambienteCod"), codLocal), 
+    		 		cb.equal(bem.get("situacao"), 1))
+        .orderBy(cb.asc(bem.get("plaqueta")));
         	
         return em.createQuery(criteria).getResultList();
     }

@@ -63,7 +63,7 @@ public class AmbienteRepository {
 		
 	}
 
-	public List<GepatBem> getBensAmbienteTransf(Integer codAmb, boolean ultimoMov) {
+	public List<GepatBem> getBensAmbienteTransf(Integer codAmb, boolean ultimoMov, boolean grupoInform) {
 		// TODO Auto-generated method stub
 
 		Connection c = null;
@@ -91,7 +91,7 @@ public class AmbienteRepository {
 			psUsuarioTransf = c.prepareStatement(strUsuarioTransf.toString());
 			
 			// recupera todos os bens do ambiente selecionado
-			lista = bemRep.getGepatBemPorCodSetor(codAmb);
+			lista = bemRep.getGepatBemPorCodSetor(codAmb, grupoInform);
 			
 			if (lista == null) return null;
 			for (GepatBem bem : lista) {

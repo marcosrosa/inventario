@@ -28,7 +28,16 @@ public class AmbienteBean {
 	private Integer quantidade = 0;
 	
 	private Boolean ultMov = true;
+	private Boolean apenasInformatica=true;
 	
+	public Boolean getApenasInformatica() {
+		return apenasInformatica;
+	}
+
+	public void setApenasInformatica(Boolean apenasInformatica) {
+		this.apenasInformatica = apenasInformatica;
+	}
+
 	private Boolean naoEncontrado = false;
 	
 	private boolean carregarLista = true;
@@ -80,7 +89,7 @@ public class AmbienteBean {
     	if (carregarLista && ambienteSel.getCodigo() > 0) {
     		logger.info("List ambiente cod " + ambienteSel.getCodigo());
     		codAmbSel = ambienteSel.getCodigo();
-    		bensAmbiente = ambienteRep.getBensAmbienteTransf(ambienteSel.getCodigo(), ultMov);
+    		bensAmbiente = ambienteRep.getBensAmbienteTransf(ambienteSel.getCodigo(), ultMov, apenasInformatica);
     	}
     }
     
@@ -89,7 +98,7 @@ public class AmbienteBean {
     		logger.info("COD ambiente cod " + codAmbSel);
     		ambienteSel = ambienteRep.porCodigo(codAmbSel);
     		if (ambienteSel!=null)
-    			bensAmbiente = ambienteRep.getBensAmbienteTransf(ambienteSel.getCodigo(), ultMov);
+    			bensAmbiente = ambienteRep.getBensAmbienteTransf(ambienteSel.getCodigo(), ultMov, apenasInformatica);
     		else 
     			naoEncontrado = true;
     		carregarLista=false;

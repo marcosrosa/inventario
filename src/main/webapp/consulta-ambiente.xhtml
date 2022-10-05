@@ -13,14 +13,27 @@
 			<div class="p-col-12">
 				<p:panel header="Consulta Por Ambiente">
 					<h:form id="consForm">
-						<h:selectBooleanCheckbox id="chkUltimo" value="#{ambienteBean.ultMov}" >
-							<h:outputLabel value="Somente Último Movimento" style="margin-left:8px"/>
-						</h:selectBooleanCheckbox>
-
-			            <h:outputLabel value="Ambiente:" style="margin-left:8px"/>
+					<div class="p-grid">
+						<div class="p-col-4">
+						<ul style="list-style-type: none">
+						  	<li>
+								<h:selectBooleanCheckbox id="chkUltimo" value="#{ambienteBean.ultMov}" >
+									<h:outputLabel value="Somente Último Movimento" style="margin-left:8px"/>
+								</h:selectBooleanCheckbox>
+							</li>
+							<li>
+								<h:selectBooleanCheckbox id="chkInformatica" value="#{ambienteBean.apenasInformatica}" >
+									<h:outputLabel value="Somente Bens Informática" style="margin-left:8px"/>
+								</h:selectBooleanCheckbox>
+							</li>
+						</ul>
+						</div>
+						
+						<div class="p-col-8">
+			            <h:outputLabel value="Ambiente:" style="margin-left:8px;"/>
 			            
-			            <h:inputText id="codAmbiente" value="#{ambienteBean.codAmbSel}" >
-			            	<f:ajax event="change" listener="#{ambienteBean.ambienteChangeCod()}" execute="@this, chkUltimo" render="somAmbiente2 view-ambiente"/>
+			            <h:inputText id="codAmbiente" value="#{ambienteBean.codAmbSel}" style="width:60px;">
+			            	<f:ajax event="change" listener="#{ambienteBean.ambienteChangeCod()}" execute="@this, chkUltimo, chkInformatica" render="somAmbiente2 view-ambiente"/>
 			            </h:inputText>
 			            												
 			            <h:selectOneMenu id="somAmbiente2" converter="#{ambienteConverter}" style="margin-left:8px;width:400px;font-size:0.8em;"
@@ -28,13 +41,17 @@
 								<f:selectItems value="#{ambienteList.ambientes}" var="_amb2" 
 									itemLabel="#{_amb2.descricao}"
 									itemValue="#{_amb2}" />
-								<f:ajax listener="#{ambienteBean.ambienteChangeList}" execute="@this, chkUltimo"  render="codAmbiente view-ambiente" />
+								<f:ajax listener="#{ambienteBean.ambienteChangeList}" execute="@this, chkUltimo, chkInformatica"  render="codAmbiente view-ambiente" />
 						</h:selectOneMenu>
 						
 						<h:commandButton action="#{ambienteBean.ambienteChangeCod()}" value="Consultar" />
+						</div>
+				    </div>
 					</h:form>
+					
 				</p:panel>
-				<p:panel rendered="#{ambienteBean.naoEncontrado}" header="AMBIENTE NAO ENCONTRADO" style="color:red"></p:panel>
+				<p:panel rendered="#{ambienteBean.naoEncontrado}" header="AMBIENTE NAO ENCONTRADO" 
+					style="color:red"/>
 				<p:panel id="view-ambiente" header="Bens do Ambiente - #{ambienteBean.quantidade}">
 					<h:dataTable value="#{ambienteBean.bensAmbiente}" var="_bemAmb" rowClasses="lnimpar, lnpar"> 
 						<h:column>
@@ -66,10 +83,8 @@
 									timeZone="Brazil/East" />
 							</h:outputText>
 						</h:column>
-						
 					</h:dataTable>
-				</p:panel>
-				
+				</p:panel>	
 			</div>
 			
 			</div>

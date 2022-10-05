@@ -26,7 +26,7 @@ public class InventarioResource {
 	@Path("/listasered")
     @Produces(MediaType.APPLICATION_JSON)
     public List<GepatBem> listTodosBens() {
-        return bemRepos.getGepatBemPorCodSetor(311);
+        return bemRepos.getGepatBemPorCodSetor(311, true);
     }
 	
     @GET
