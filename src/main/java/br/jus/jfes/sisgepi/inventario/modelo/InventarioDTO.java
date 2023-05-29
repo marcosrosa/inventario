@@ -15,7 +15,6 @@ public class InventarioDTO implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
 	public InventarioDTO(Long patrimonioEq, Long patrimonioIn, Integer ano, 
 			Integer classificacao, Integer setorColetaCod, Integer setorEquipCod, 
 			String setorColeta, String setorEquip, 

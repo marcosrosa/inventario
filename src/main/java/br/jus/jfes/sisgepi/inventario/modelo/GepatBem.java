@@ -134,6 +134,13 @@ public class GepatBem implements Serializable {
 			return ambienteCod + " - " + ambienteDescr;
 		return null;
 	}
+	
+	public String getSituacaoLabel() {
+		if (situacao != null)
+			return String.format("%d - %s",situacao, (situacao==1 ? "Ativo" : "Baixado do Patrimônio"));
+		return null;
+	}
+
 
 	public TransferenciaUsuario getTransfUsuario() {
 		return transfUsuario;
